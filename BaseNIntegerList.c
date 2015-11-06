@@ -10,18 +10,18 @@
 #define FALSE 0
 typedef int BOOL;
 
-typedef struct BaseNIntegerList
+typedef struct BaseNIntegerList1
 {
-	struct BaseNIntegerList *head;
-	struct BaseNIntegerList *tail;
+	struct BaseNIntegerList1 *head;
+	struct BaseNIntegerList1 *tail;
 	int base;
 	int size;
 }BaseNIntegerList;
 
-typedef struct ListElement
+typedef struct ListElement1
 {
-	struct ListElement *previous;
-	struct ListElement *next;
+	struct ListElement1 *previous;
+	struct ListElement1 *next;
 	int value;
 }ListElement;
 
@@ -74,19 +74,20 @@ BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
 
-	newel.value = s;				// je suis pas sur pour ça     ++    vérification de la base ou pas ? --> autre fonction
+	newel->value = s;				// je suis pas sur pour ça     ++    vérification de la base ou pas ? --> autre fonction
 	
 	if (isEmpty(l)==0)
 	{
-		newel.next = NULL;
+		newel->next = NULL;
 		l.tail = newel;
 	}else{
-		newel.next = l.head;
+		newel->next = l.head;
 		(l.head)->previous = newel;
+		//(*l).head->previous = newel;
 		l.head = newel;
 	}
 	l.size = l.size + 1;
-	newel.previous = NULL;
+	newel->previous = NULL;
 
 	return l;
 }
@@ -143,7 +144,7 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 			l.size = 0;
 		}else{
 			BaseNIntegerList* p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
-			p.head = l.head;
+			p->head = l.head;
 			l.head = (l.head)->next;
 			(l.head)->previous = NULL;
 			l.size = l.size - 1;
@@ -181,7 +182,7 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 			l.size = 0;
 		}else{
 			BaseNIntegerList* p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
-			p.tail = l.tail;
+			p->tail = l.tail;
 			l.tail = (l.tail)->previous;
 			(l.tail)->next = NULL;
 			l.size = l.size - 1;

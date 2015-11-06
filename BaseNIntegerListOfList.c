@@ -13,19 +13,21 @@ typedef int BOOL;
 
 
 
-BaseNIntegerListOfList createBucketList (int);
+
+BaseNIntegerListOfList createBucketList (int k);
 /************************************************************************************
 *
-*creates a BaseNIntegerListOfList for storing list of integers in base N 
+*Creates a BaseNIntegerListOfList for storing list of integers in base N 
 *(N being the specified integer, first parameter) 
+*Parameters : integer of the base
 *
 *************************************************************************************/
 
 
-BaseNIntegerListOfList buildBucketList(BaseNintegerList, int);
+BaseNIntegerListOfList buildBucketList(BaseNintegerList l, int k);
 /*************************************************************************************
 *
-*builds a new BaseNIntegerListOfList according to the specified BaseNIntegerList 
+*Builds a new BaseNIntegerListOfList according to the specified BaseNIntegerList 
 *and considering the specified digit position (rightmost)
 		Remark : You could use the function strtol 2 for converting a given digit (char*) 
 		represented in a given base into the corresponding digit in decimal
@@ -35,36 +37,39 @@ BaseNIntegerListOfList buildBucketList(BaseNintegerList, int);
 *************************************************************************************/
 
 
-BaseNintegerList buildIntegerList(BaseNIntegerListOfList);
+BaseNintegerList buildIntegerList(BaseNIntegerListOfList L);
 /*************************************************************************************
 *
-*builds a new BaseNIntegerList from the specified BaseNIntegerListOfList 
+*Builds a new BaseNIntegerList from the specified BaseNIntegerListOfList 
 *(respecting the ascending order on the buckets)
+*Parameters : BaseNintegerListOfList to 'convert' in BaseNIntegerList
 *
 *************************************************************************************/
 
-BaseNIntegerListOfList addIntegerIntoBucket(BaseNIntegerListOfList , char* , int);
+BaseNIntegerListOfList addIntegerIntoBucket(BaseNIntegerListOfList L, char* s, int n);
 /*************************************************************************************
 *
-*adds a new integer (char*) at the end of the specified list in bucket N 
+*Adds a new integer (char*) at the end of the specified list in bucket N 
 *(N being the third parameter, between 0 and F[or 16])
+*Parameters : BaseNIntegerListOfList , Integer to add, Integer 
 *
 *************************************************************************************/
 
-void deleteBucketList(BaseNIntegerListOfList);
+void deleteBucketList(BaseNIntegerListOfList L);
 /*************************************************************************************
 *
-*clears and deletes the specified BaseNIntegerListOfList 
+*Clears and deletes the specified BaseNIntegerListOfList 
 *(free the previously allocated memory)
+*Parameters : BaseNIntegerListOfList to delete
 *
 *************************************************************************************/
 
-BaseNIntegerListOfList radixsort(BaseNIntegerListOfList);
+BaseNIntegerListOfList radixsort(BaseNIntegerListOfList L);
 /************************************************************************************
 *
-*sorts the specified BaseNIntegerList using the proposed radix sort approach. 
+*Sorts the specified BaseNIntegerList using the proposed radix sort approach. 
 *See Figures 3-7 for a detailed description of the expected behavior of this function.
-*
+*Parameters : BaseNIntegerListOfList to sort 
 *
 ************************************************************************************/
 #endif 
