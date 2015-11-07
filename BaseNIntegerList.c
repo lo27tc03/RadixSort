@@ -1,14 +1,4 @@
-//#ifndef
-//#define
-
-
-
-#include <stdlib.h>
-#include <stdio.h>
-
-#define TRUE 1
-#define FALSE 0
-typedef int BOOL;
+#include <BaseNIntegerList.h>
 
 typedef struct BaseNIntegerList
 {
@@ -18,10 +8,9 @@ typedef struct BaseNIntegerList
 	int size;
 }BaseNIntegerList;
 
-typedef struct ListElement
-{
-	struct ListElement *previous;
-	struct ListElement *next;
+typedef struct elem {
+	struct elem *previous;
+	struct elem *next;
 	int value;
 }ListElement;
 
@@ -29,7 +18,7 @@ typedef struct ListElement
 
 /**************************************************************************************
 *
-*Creates a new empty BaseNIntegerList for storing integers in the specified base 
+*Creates a new empty BaseNIntegerList for storing integers in the specified base
 *Parameters : integer of the base
 *
 *************************************************************************************/
@@ -45,11 +34,6 @@ BaseNIntegerList createIntegerList (int v)
 	return l;
 }
 
-
-
-
-
-
 /*************************************************************************************
 *Test if the list is empty
 *Return 0 if empty, 1 else
@@ -59,9 +43,6 @@ BOOL isEmpty (BaseNIntegerList l)
 {
 	return (l.size==0);
 }
-
-
-
 
 
 /*************************************************************************************
@@ -74,19 +55,22 @@ BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
 
-	newel.value = s;				// je suis pas sur pour ça     ++    vérification de la base ou pas ? --> autre fonction
-	
-	if (isEmpty(l)==0)
+	newel.value = s;
+	newel.previous = NULL;
+
+	if (isEmpty(l) == TRUE)
 	{
 		newel.next = NULL;
-		l.tail = newel;
-	}else{
+		l.tail = l.head = newel;
+	}
+	else
+	{
 		newel.next = l.head;
-		(l.head)->previous = newel;
+		l.head->previous = newel;
 		l.head = newel;
 	}
-	l.size = l.size + 1;
-	newel.previous = NULL;
+
+	l.size++;
 
 	return l;
 }
@@ -103,19 +87,21 @@ BaseNIntegerList insertTail (BaseNIntegerList l, char* s)
 {
 	ListElement newel = (ListElement*)malloc(sizeof(ListElement));
 
-	newel.value =  s; 			//IDEM que insertHead
+	newel.value = s; 			//IDEM que
+	newel.next = NULL;
 
-	if (isEmpty(l)==0)
+	if (isEmpty(l) == TRUE)
 	{
 		newel.previous = NULL;
-		l.head = newel;
-	}else{
+		l.tail = l.head = newel;
+	}
+	else
+	{
 		newel.previous = l.tail;
-		(l.tail)->next = newel;
+		l.tail->next = newel;
 		l.tail = newel
 	}
-	l.size = l.size + 1;
-	newel.next = NULL;
+	l.size++;
 
 	return l;
 }
@@ -131,22 +117,25 @@ BaseNIntegerList insertTail (BaseNIntegerList l, char* s)
 *************************************************************************************/
 BaseNIntegerList removeHead(BaseNIntegerList l)
 {
-	if (l.size==0)
-	{
+	if (isEmpty(l) == TRUE
 		return l;
-	}else{
+
+	else
+	{
 		if (l.size==1)
 		{
 			free(l.head);
 			l.head = NULL;
 			l.tail = NULL;
-			l.size = 0;
-		}else{
-			BaseNIntegerList* p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
-			p.head = l.head;
-			l.head = (l.head)->next;
-			(l.head)->previous = NULL;
-			l.size = l.size - 1;
+			l.size--;
+		}
+		else
+		{
+			ListElement *p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
+			p = l.head;
+			l.head = l.head->next;
+			l.head->previous = NULL;
+			l.size--;
 			free(p);
 			p = NULL;
 		}
@@ -170,21 +159,23 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 BaseNIntegerList removeTail(BaseNIntegerList l)
 {
 	if (l.size==0)
-	{
 		return l;
-	}else{
+
+	else{
 		if (l.size==1)
 		{
-			free(l.head);
+			free(l.tail);
 			l.head = NULL;
 			l.tail = NULL;
-			l.size = 0;
-		}else{
-			BaseNIntegerList* p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
-			p.tail = l.tail;
-			l.tail = (l.tail)->previous;
-			(l.tail)->next = NULL;
-			l.size = l.size - 1;
+			l.size--;
+		}
+		else
+		{
+			ListElement *p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
+			p = l.tail;
+			l.tail = l.tail->previous;
+			l.tail->next = NULL;
+			l.size --;
 			free(p);
 			p = NULL;
 		}
@@ -199,7 +190,7 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 void deleteIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
-*clears and deletes the specified BaseNIntegerList 
+*clears and deletes the specified BaseNIntegerList
 *(free the previously allocated memory)
 *
 *************************************************************************************/
@@ -207,9 +198,9 @@ void deleteIntegerList(BaseNIntegerList l);
 char* sumIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
-*sums all the integers defined in the 
-*specified list using the Binary addition (base 2) 
-*and returns the corresponding results as 
+*sums all the integers defined in the
+*specified list using the Binary addition (base 2)
+*and returns the corresponding results as
 *an integer (char*) defined in the base of the list
 *
 *
@@ -218,8 +209,8 @@ char* sumIntegerList(BaseNIntegerList l);
 char* convertBaseToBinary(char* s, int n);
 /**************************************************************************************
 *
-*converts the specified integer (char*) 
-*represented with the specified base (Integer, second parameter) 
+*converts the specified integer (char*)
+*represented with the specified base (Integer, second parameter)
 *into a corresponding binary integer (base 2).
 *
 *
@@ -228,11 +219,11 @@ char* convertBaseToBinary(char* s, int n);
 char* convertBinaryToBase(char* s, int n);
 /**************************************************************************************
 *
-*converts an integer represented using a binary base (base 2) 
-*into a corresponding integer represented 
+*converts an integer represented using a binary base (base 2)
+*into a corresponding integer represented
 *with the specified base (Integer, second parameter)
 *
 *
 *************************************************************************************/
 
-//#endif 
+//#endif
