@@ -1,7 +1,5 @@
-#ifndef  //typedef de la BaseNintegerList ?? 
-#define
-
-
+#ifndef BASENINTEGERLIST_H
+#define BASENINTEGERLIST_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,30 +8,29 @@
 #define FALSE 0
 typedef int BOOL;
 
-typedef struct BaseNIntegerList
-{
-	struct BaseNIntegerList *head;
-	struct BaseNIntegerList *tail;
+typedef struct elem {
+	struct elem *previous;
+	struct elem *next;
+	char* value;
+}ListElement;
+
+
+typedef struct {
+	ListElement *head;
+	ListElement *tail;
 	int base;
 	int size;
 }BaseNIntegerList;
 
-typedef struct ListElement
-{
-	struct ListElement *previous;
-	struct ListElement *next;
-	int value;
-}ListElement;
-
 BaseNIntegerList createIntegerList (int);
 /**************************************************************************************
 *
-*Creates a new empty BaseNIntegerList for storing integers in the specified base 
+*Creates a new empty BaseNIntegerList for storing integers in the specified base
 *Parameters : integer of the base
 *
 *************************************************************************************/
 
-BOOL isEmpty (BaseNIntegerList, );
+BOOL isEmpty (BaseNIntegerList);
 /*************************************************************************************
 *Test if the list is empty
 *Return 0 if empty, 1 else
@@ -76,7 +73,7 @@ BaseNIntegerList removeTail(BaseNIntegerList);
 void deleteIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
-*clears and deletes the specified BaseNIntegerList 
+*clears and deletes the specified BaseNIntegerList
 *(free the previously allocated memory)
 *
 *************************************************************************************/
@@ -84,9 +81,9 @@ void deleteIntegerList(BaseNIntegerList l);
 char* sumIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
-*sums all the integers defined in the 
-*specified list using the Binary addition (base 2) 
-*and returns the corresponding results as 
+*sums all the integers defined in the
+*specified list using the Binary addition (base 2)
+*and returns the corresponding results as
 *an integer (char*) defined in the base of the list
 *
 *
@@ -95,8 +92,8 @@ char* sumIntegerList(BaseNIntegerList l);
 char* convertBaseToBinary(char* s, int n);
 /**************************************************************************************
 *
-*converts the specified integer (char*) 
-*represented with the specified base (Integer, second parameter) 
+*converts the specified integer (char*)
+*represented with the specified base (Integer, second parameter)
 *into a corresponding binary integer (base 2).
 *
 *
@@ -105,11 +102,11 @@ char* convertBaseToBinary(char* s, int n);
 char* convertBinaryToBase(char* s, int n);
 /**************************************************************************************
 *
-*converts an integer represented using a binary base (base 2) 
-*into a corresponding integer represented 
+*converts an integer represented using a binary base (base 2)
+*into a corresponding integer represented
 *with the specified base (Integer, second parameter)
 *
 *
 *************************************************************************************/
 
-#endif 
+#endif
