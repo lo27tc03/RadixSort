@@ -1,23 +1,16 @@
 #include <BaseNIntegerList.h>
 
-typedef struct BaseNIntegerList1
+typedef struct BaseNIntegerList
 {
-	struct BaseNIntegerList1 *head;
-	struct BaseNIntegerList1 *tail;
+	struct BaseNIntegerList *head;
+	struct BaseNIntegerList *tail;
 	int base;
 	int size;
 }BaseNIntegerList;
 
-<<<<<<< HEAD
-typedef struct ListElement1
-{
-	struct ListElement1 *previous;
-	struct ListElement1 *next;
-=======
 typedef struct elem {
 	struct elem *previous;
 	struct elem *next;
->>>>>>> origin/master
 	int value;
 }ListElement;
 
@@ -62,22 +55,6 @@ BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
 
-<<<<<<< HEAD
-	newel->value = s;				// je suis pas sur pour ça     ++    vérification de la base ou pas ? --> autre fonction
-	
-	if (isEmpty(l)==0)
-	{
-		newel->next = NULL;
-		l.tail = newel;
-	}else{
-		newel->next = l.head;
-		(l.head)->previous = newel;
-		//(*l).head->previous = newel;
-		l.head = newel;
-	}
-	l.size = l.size + 1;
-	newel->previous = NULL;
-=======
 	newel.value = s;
 	newel.previous = NULL;
 
@@ -94,7 +71,6 @@ BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 	}
 
 	l.size++;
->>>>>>> origin/master
 
 	return l;
 }
@@ -151,15 +127,6 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 			free(l.head);
 			l.head = NULL;
 			l.tail = NULL;
-<<<<<<< HEAD
-			l.size = 0;
-		}else{
-			BaseNIntegerList* p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
-			p->head = l.head;
-			l.head = (l.head)->next;
-			(l.head)->previous = NULL;
-			l.size = l.size - 1;
-=======
 			l.size--;
 		}
 		else
@@ -169,7 +136,6 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 			l.head = l.head->next;
 			l.head->previous = NULL;
 			l.size--;
->>>>>>> origin/master
 			free(p);
 			p = NULL;
 		}
@@ -201,15 +167,6 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 			free(l.tail);
 			l.head = NULL;
 			l.tail = NULL;
-<<<<<<< HEAD
-			l.size = 0;
-		}else{
-			BaseNIntegerList* p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
-			p->tail = l.tail;
-			l.tail = (l.tail)->previous;
-			(l.tail)->next = NULL;
-			l.size = l.size - 1;
-=======
 			l.size--;
 		}
 		else
@@ -219,7 +176,6 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 			l.tail = l.tail->previous;
 			l.tail->next = NULL;
 			l.size --;
->>>>>>> origin/master
 			free(p);
 			p = NULL;
 		}
@@ -231,49 +187,13 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 
 
 
-
+void deleteIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
 *clears and deletes the specified BaseNIntegerList
 *(free the previously allocated memory)
 *
 *************************************************************************************/
-void deleteIntegerList(BaseNIntegerList l)
-{
-	if (l.head == NULL)
-	{
-		return l;
-	}else{
-		if (l.head->next == NULL)
-		{
-			free(l);
-			l = NULL;
-			return EXIT_SUCCESS;
-		}else{
-
-			BaseNIntegerList* p,k;
-			p = k = l;
-			while(l.head->next != NULL)
-			{
-				k = l;
-				l.head = l.head->next;
-				free(k);
-				k = NULL;
-				k l.head;
-			}
-			return EXIT_SUCCESS;
-			}
-	}
-}
-
-
-
-
-
-
-
-
-
 
 char* sumIntegerList(BaseNIntegerList l);
 /**************************************************************************************

@@ -40,9 +40,9 @@ $(TARGET): $(EXESOURCEOFILE) $(LLIBTARGET)
 	$(CXX) $(EXESOURCEOFILE) -l$(LLIBTARGET2) $(LIBSDIR) -o $(TARGET)
 
 #Generating the library binary code
-$(LLIBTARGET): $(LlIBSOURCEOFILE)
+$(LLIBTARGET): $(LLIBSOURCEOFILE)
 	@echo "\n Generating the library " $@
-	$(CXX) $(CFLAGS) -shared $(LlIBSOURCEOFILE) -o $(LLIBTARGET)
+	$(CXX) $(CFLAGS) -shared $(LLIBSOURCEOFILE) -o $(LLIBTARGET)
 
 #Generating an object file from a C file having the same name
 .c.o:
