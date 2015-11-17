@@ -186,14 +186,49 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 
 
 
-
-void deleteIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
 *clears and deletes the specified BaseNIntegerList
 *(free the previously allocated memory)
 *
 *************************************************************************************/
+void deleteIntegerList(BaseNIntegerList l)
+{
+	if (l.head == NULL)
+	{
+		return l;
+	}else{
+		if (l.head->next == NULL)
+		{
+			free(l);
+			l = NULL;
+			return EXIT_SUCCESS;
+		}else{
+
+			BaseNIntegerList* p,k;
+			p = k = l;
+			while(l.head->next != NULL)
+			{
+				k = l;
+				l.head = l.head->next;
+				free(k);
+				k = NULL;
+				k l.head;
+			}
+			return EXIT_SUCCESS;
+			}
+	}
+}
+
+
+
+
+
+
+
+
+
+
 
 char* sumIntegerList(BaseNIntegerList l);
 /**************************************************************************************
