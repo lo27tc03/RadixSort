@@ -213,8 +213,9 @@ void deleteIntegerList(BaseNIntegerList l)
 				l.head = l.head->next;
 				free(k);
 				k = NULL;
-				k l.head;
+				k = l.head;
 			}
+			l = NULL;
 			return EXIT_SUCCESS;
 			}
 	}
