@@ -33,7 +33,7 @@ BaseNIntegerList createIntegerList (int);
 BOOL isEmpty (BaseNIntegerList);
 /*************************************************************************************
 *Test if the list is empty
-*Return 0 if empty, 1 else
+*Return 1 if empty, 0 else
 *Parameters : BaseNintegerList to test
 **************************************************************************************/
 
@@ -81,15 +81,15 @@ void deleteIntegerList(BaseNIntegerList l);
 char* sumIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
-*sums all the integers defined in the
-*specified list using the Binary addition (base 2)
-*and returns the corresponding results as
+*sums all the integers ••••defined in the
+*specified list using t••••he Binary addition (base 2)
+*and returns the corres••••ponding results as
 *an integer (char*) defined in the base of the list
 *
 *
 *************************************************************************************/
 
-char* convertBaseToBinary(char* s, int n);
+int convertBaseToBinary(char* s, int n);
 /**************************************************************************************
 *
 *converts the specified integer (char*)

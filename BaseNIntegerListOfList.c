@@ -1,45 +1,81 @@
-#include <BaseNIntegerListOfList.h>
+#include "BaseNIntegerListOfList.h"
+#include <math.h>
+#include <string.h>
 
 
-BaseNIntegerListOfList createBucketList (int base);
-/************************************************************************************
-*
-*creates a BaseNIntegerListOfList for storing list of integers in base N
-*(N being the specified integer, first parameter)
-*
-*************************************************************************************/
+BaseNIntegerListOfList createBucketList (int base)
+{
+	BaseNIntegerListOfList l;
+	l.base = base;
+	l.error = FALSE;
+
+	int i;
+	for(i = 0; i <= 16; ++i)
+		l.list[i] = createIntegerList(base);
+
+	return l;
+}
 
 
-BaseNIntegerListOfList buildBucketList(BaseNintegerList list, int pos);
-/*************************************************************************************
-*
-*builds a new BaseNIntegerListOfList according to the specified BaseNIntegerList
-*and considering the specified digit position (rightmost)
-		Remark : You could use the function strtol 2 for converting a given digit (char*)
-		represented in a given base into the corresponding digit in decimal
-		base, it could be useful for identifying the right bucket.
-*
-*
-*************************************************************************************/
+BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
+{
+		BaseNIntegerListOfList bucketlist = createBucketList(list.base);
+		if(list.size == 0)
+		{
+			bucketlist.error = TRUE;
+			return bucketlist;
+		}
+		int bucket;
+		int i = 0;
+		while(!isEmpty(list))
+		{
+
+		char* temp = list.head->value;
+
+		list = removeHead(list);
+		char chartemp = (char)temp[strlen(temp) - pos];
+		printf("%c (debug)\n", chartemp);
+		bucket = strtol(&chartemp, 0, 36);
+		if (bucket > 17)
+		{
+				bucketlist.error = TRUE;
+				return bucketlist;
+		}
+
+		bucketlist.list[bucket] = insertTail(bucketlist.list[bucket], temp);
+		}
+
+		return bucketlist;
+}
 
 
-BaseNintegerList buildIntegerList(BaseNIntegerListOfList listOfList);
-/*************************************************************************************
-*
-*builds a new BaseNIntegerList from the specified BaseNIntegerListOfList
-*(respecting the ascending order on the buckets)
-*
-*************************************************************************************/
 
-BaseNIntegerListOfList addIntegerIntoBucket(BaseNIntegerListOfList listOfList, char* integer, int bucket);
-/*************************************************************************************
-*
-*adds a new integer (char*) at the end of the specified list in bucket N
-*(N being the third parameter, between 0 and F[or 16])
-*
-*************************************************************************************/
+BaseNIntegerList buildIntegerList(BaseNIntegerListOfList bucketList)
+{
+	BaseNIntegerList output;
+	int i;
 
-void deleteBucketList(BaseNIntegerListOfList listOfList);
+	for(i = 0; i <= 16; ++i)
+	{
+		while(!isEmpty(bucketList.list[i]))
+		{
+			output = insertTail(output, bucketList.list[i].head->value);
+			bucketList.list[i] = removeHead(bucketList.list[i]);
+		}
+	}
+
+	return output;
+}
+
+BaseNIntegerListOfList addIntegerIntoBucket(BaseNIntegerListOfList listOfList, char* integer, int bucket)
+{
+
+}
+
+void deleteBucketList(BaseNIntegerListOfList listOfList)
+{
+
+}
 /*************************************************************************************
 *
 *clears and deletes the specified BaseNIntegerListOfList
@@ -47,7 +83,8 @@ void deleteBucketList(BaseNIntegerListOfList listOfList);
 *
 *************************************************************************************/
 
-BaseNIntegerListOfList radixsort(BaseNIntegerListOfList listOfList);
+BaseNIntegerListOfList radixsort(BaseNIntegerListOfList listOfList)
+{}
 /************************************************************************************
 *
 *sorts the specified BaseNIntegerList using the proposed radix sort approach.

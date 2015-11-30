@@ -1,11 +1,12 @@
 #ifndef BASENINTEGERLISTOFLIST_H
 #define BASENINTEGERLISTOFLIST_H
 
-#include <BaseNIntegerList.h>
+#include "BaseNIntegerList.h"
 
 typedef struct{
 	int base;
-	BaseNIntegerList* list;
+	BaseNIntegerList list[17];
+	BOOL error;
 }BaseNIntegerListOfList;
 
 
