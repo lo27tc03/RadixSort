@@ -2,12 +2,12 @@
 
 
 /*******************************************************************************************/
-Function : createIntegerList(v : Integer) : BaseNIntegerList
+Function : createIntegerList(base : Integer) : BaseNIntegerList
 BEGIN
 	BaseNIntegerList l
 	head(l)<--UNDEFINED
 	tail(l)<--UNDEFINED
-	base(l)<--v
+	base(l)<--base
 	size(l)<--0
 
 	BaseNIntegerList <-- l
@@ -31,7 +31,7 @@ BEGIN
 		tail(l)<--head(l)<--newel
 	else
 		next(newel)<--head(l)
-		head(l)->(previous) <-- newel
+		previous(head(l)) <-- newel
 		head(l)<-- newel
 	endif
 
@@ -52,7 +52,7 @@ BEGIN
 		tail(l) <-- head(l) <-- newel
 	else
 		previous(newel) <-- tail(l)
-		tail(l)-->(next)<--newel
+		next(tail(l))<--newel
 		tail(l)<--newel
 	endif
 
@@ -75,8 +75,8 @@ BEGIN
 		else
 			ListElement *p 
 			p<--head(l)
-			head(l)<--head(l)-->next
-			head(l)-->previous <-- UNDEFINED
+			head(l)<--next(head(l))
+			previous(head(l))<-- UNDEFINED
 			free(p)
 			size(l)<--size(l) - 1
 			p<--UNDEFINED
@@ -100,8 +100,8 @@ BEGIN
 		else
 			ListElement *p 
 			p<--tail(l)
-			tail(l)<--tail(l)-->previous
-			tail(l)-->next <-- UNDEFINED
+			tail(l)<--previous(tail(l))
+			next(tail(l))<-- UNDEFINED
 			size(l)<--size(l) - 1
 			free(p)
 			p<--UNDEFINED
@@ -111,7 +111,7 @@ BEGIN
 	removeTail<--l
 END
 /*******************************************************************************************/
-Process : deleteIntegerList (l : BaseNIntegerList)
+Process : deleteIntegerList (l : BaseNIntegerList) //////////A REPRENDRE C MODIFIÉ
 BEGIN
 	if head(l) = UNDEFINED then
 		deleteIntegerList<--l
@@ -135,4 +135,16 @@ BEGIN
 		endif
 	endif
 END
+/*******************************************************************************************/
 
+
+Function : convertBaseToBinary(s : char*, n : Integer) : Integer
+BEGIN
+END
+
+/*******************************************************************************************/
+
+
+Function : convertBinaryToBase(s: char*, n : Integer) : char*
+BEGIN
+END

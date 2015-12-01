@@ -30,19 +30,19 @@ BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
 		while(!isEmpty(list))
 		{
 
-		char* temp = list.head->value;
+			char* temp = list.head->value;
 
-		list = removeHead(list);
-		char chartemp = (char)temp[strlen(temp) - pos];
-		printf("%c (debug)\n", chartemp);
-		bucket = strtol(&chartemp, 0, 36);
-		if (bucket > 17)
-		{
-				bucketlist.error = TRUE;
-				return bucketlist;
-		}
+			list = removeHead(list);
+			char chartemp = (char)temp[strlen(temp) - pos];
+			printf("%c (debug)\n", chartemp);
+			bucket = strtol(&chartemp, 0, 36);
+			if (bucket > 17)
+			{
+					bucketlist.error = TRUE;
+					return bucketlist;
+			}
 
-		bucketlist.list[bucket] = insertTail(bucketlist.list[bucket], temp);
+			bucketlist.list[bucket] = insertTail(bucketlist.list[bucket], temp);
 		}
 
 		return bucketlist;
