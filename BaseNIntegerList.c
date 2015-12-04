@@ -182,4 +182,24 @@ char* convertBinaryToBase(char* s, int n)
 *
 *************************************************************************************/
 
+int get_And_Verify_Int(int test, int upper_bound, int lower_bound)
+{
+	scanf("%d",&test);
+    while(test>upper_bound || test<lower_bound) 
+    {
+        printf("Your choice is not valid,\n please try again.\n");
+        scanf("%d",&test);
+    }
+
+    return test;
+}
+/**************************************************************************************
+*
+*Get an integer and verify if it is inbetween the two bounds
+*Parameters: test , upper_bound , lower_bound
+*
+*************************************************************************************/
+
+
+
 //#endif

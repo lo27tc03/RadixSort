@@ -109,4 +109,13 @@ char* convertBinaryToBase(char* s, int n);
 *
 *************************************************************************************/
 
+int get_And_Verify_Int(int test, int upper_bound, int lower_bound);
+/**************************************************************************************
+*
+*Get an integer and verify if it is inbetween the two bounds
+*Parameters: test , upper_bound , lower_bound
+*
+*************************************************************************************/
+
+
 #endif
