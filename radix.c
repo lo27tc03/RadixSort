@@ -1,11 +1,15 @@
-#include "BaseNIntegerList.h"
-#include "BaseNIntegerListOfList.h"
+//#include "BaseNIntegerList.h"
+//#include "BaseNIntegerListOfList.h"
 
 int main(int argc, char** argv)
 {
     int i;
 
-    BaseNIntegerList l = createIntegerList(10);
+    printf("    |———————————————— Welcome In Our Radix Sort Programm ————————————————|\n\n\n\n");
+    printf("Implemented by G.Duvauchelle and S.Prost      UTBM Students in L027\n\n\n\n");
+
+
+  BaseNIntegerList l = createIntegerList(10);
     l = insertHead(l, "4747");
     l = insertHead(l, "2222");
     l = insertHead(l, "5353");
@@ -26,4 +30,6 @@ int main(int argc, char** argv)
 
 
     return EXIT_SUCCESS;
+
+
 }
