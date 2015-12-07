@@ -89,7 +89,7 @@ char* sumIntegerList(BaseNIntegerList l);
 *
 *************************************************************************************/
 
-int convertBaseToBinary(char* s, int n);
+char* convertBaseToBinary(char* s, int n);
 /**************************************************************************************
 *
 *converts the specified integer (char*)
@@ -117,5 +117,6 @@ int get_And_Verify_Int(int test, int upper_bound, int lower_bound);
 *
 *************************************************************************************/
 
+BaseNIntegerList fill(int base);
 
 #endif

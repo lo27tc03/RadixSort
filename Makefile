@@ -5,19 +5,26 @@
 #		clean : cleans temporary files and binary files
 
 CXX = gcc
-CFLAGS = -Wall -Werror -ansi -pedantic -fPIC -g
+CFLAGS = -Wall -Werror -pedantic -fPIC -g
 #penser à retirer -g quand on rendra le projet
 LIBSDIR = -L. -L/usr/lib
 INCLUDEDIR = -I. -I/usr/include
 
-#Listlib Library-related macros
-LLIBTARGET = libList.so
-LLIBTARGET2 = List
-LLIBSOURCE = BaseNIntegerList
-LLIBSOURCECFILE = $(LLIBSOURCE:=.c)
-LLIBSOURCEOFILE = $(LLIBSOURCE:=.o)
+#List lib Library-related macros
+targetList = libList.so
+targetListName = List
 
-#ListOfListlib Library-related macros
+listSources = BaseNIntegerList
+listSourcesC = $(listSources:=.c)
+listSourcesO = $(listSources:=.o)
+
+#ListOfList lib Library-related macros
+targetListOfList = libListOfList.so
+targetListOfListName = ListOfList
+
+listOfListSources = BaseNIntegerListOfList
+listOfListSourcesC = $(listOfListSources:=.c)
+listOfListSourcesO = $(listOfListSources:=.o)
 
 
 #Application-related macros
@@ -35,14 +42,20 @@ run: $(TARGET)
 	./$(TARGET)
 
 #Generating the executable
-$(TARGET): $(EXESOURCEOFILE) $(LLIBTARGET)
+$(TARGET): $(EXESOURCEOFILE) $(targetList) $(targetListOfList)
 	@echo "\n Generating the executable " $@
-	$(CXX) $(EXESOURCEOFILE) -l$(LLIBTARGET2) $(LIBSDIR) -o $(TARGET)
+	$(CXX) $(EXESOURCEOFILE) $(LIBSDIR) -o $(TARGET) -l$(targetListName) -l$(targetListOfListName)
 
-#Generating the library binary code
-$(LLIBTARGET): $(LLIBSOURCEOFILE)
+#Generating the library libList.so binary code
+$(targetList): $(listSourcesO)
 	@echo "\n Generating the library " $@
-	$(CXX) $(CFLAGS) -shared $(LLIBSOURCEOFILE) -o $(LLIBTARGET)
+	$(CXX) $(CFLAGS) -shared $(listSourcesO) -o $(targetList)
+
+
+#Generating the library libListOfList.so binary code
+$(targetListOfList): $(listOfListSourcesO)
+	@echo "\n Generating the library " $@
+	$(CXX) $(CFLAGS) -shared $(listOfListSourcesO) -o $(targetListOfList)
 
 #Generating an object file from a C file having the same name
 .c.o:

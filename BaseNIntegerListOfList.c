@@ -1,4 +1,4 @@
-#include "BaseNIntegerListOfList.h"
+#include <BaseNIntegerListOfList.h>
 #include <math.h>
 #include <string.h>
 
@@ -26,15 +26,16 @@ BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
 			return bucketlist;
 		}
 		int bucket;
-		int i = 0;
 		while(!isEmpty(list))
 		{
 
 			char* temp = list.head->value;
 
 			list = removeHead(list);
+
 			char chartemp = (char)temp[strlen(temp) - pos];
-			printf("%c (debug)\n", chartemp);
+
+			//printf("%c (debug)\n", chartemp);
 			bucket = strtol(&chartemp, 0, 36);
 			if (bucket > 17)
 			{
@@ -69,7 +70,7 @@ BaseNIntegerList buildIntegerList(BaseNIntegerListOfList bucketList)
 
 BaseNIntegerListOfList addIntegerIntoBucket(BaseNIntegerListOfList listOfList, char* integer, int bucket)
 {
-
+	return listOfList;
 }
 
 void deleteBucketList(BaseNIntegerListOfList listOfList)
@@ -84,11 +85,6 @@ void deleteBucketList(BaseNIntegerListOfList listOfList)
 *************************************************************************************/
 
 BaseNIntegerListOfList radixsort(BaseNIntegerListOfList listOfList)
-{}
-/************************************************************************************
-*
-*sorts the specified BaseNIntegerList using the proposed radix sort approach.
-*See Figures 3-7 for a detailed description of the expected behavior of this function.
-*
-*
-************************************************************************************/
+{
+	return listOfList;
+}

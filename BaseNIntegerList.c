@@ -1,4 +1,5 @@
-#include "BaseNIntegerList.h"
+#include <BaseNIntegerList.h>
+#include <string.h>
 
 BaseNIntegerList createIntegerList (int base)
 {
@@ -48,7 +49,7 @@ BaseNIntegerList insertTail (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
 
-	newel->value = s; 			
+	newel->value = s;
 	newel->next = NULL;
 
 	if (isEmpty(l) == TRUE)
@@ -126,14 +127,13 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 
 void deleteIntegerList(BaseNIntegerList l)
 {
-	int i;
 	while(l.size != 0)
 		removeHead(l);
 }
 
 char* sumIntegerList(BaseNIntegerList l)
 {
-
+	return "";
 }
 /**************************************************************************************
 *
@@ -145,9 +145,9 @@ char* sumIntegerList(BaseNIntegerList l)
 *
 *************************************************************************************/
 
-int convertBaseToBinary(char* s, int n)
+char* convertBaseToBinary(char* s, int n)
 {
-	long int integer = strtol(s, &s, n);
+	long int integer = strtol(s, 0, n);
 
 	int rem, i=1, binary=0;
 	while (integer!=0)
@@ -157,7 +157,8 @@ int convertBaseToBinary(char* s, int n)
 		binary+=rem*i;
 		i*=10;
 	}
-	return binary;
+	sprintf(s, "%d", binary);
+	return s;
 }
 
 /**************************************************************************************
@@ -171,7 +172,7 @@ int convertBaseToBinary(char* s, int n)
 
 char* convertBinaryToBase(char* s, int n)
 {
-
+	return s;
 }
 /**************************************************************************************
 *
@@ -182,10 +183,10 @@ char* convertBinaryToBase(char* s, int n)
 *
 *************************************************************************************/
 
-int get_And_Verify_Int(int test, int upper_bound, int lower_bound)
+int get_And_Verify_Int(int test, int lower_bound, int upper_bound)
 {
 	scanf("%d",&test);
-    while(test>upper_bound || test<lower_bound) 
+    while(test>upper_bound || test<lower_bound)
     {
         printf("Your choice is not valid,\n please try again.\n");
         scanf("%d",&test);
@@ -200,6 +201,51 @@ int get_And_Verify_Int(int test, int upper_bound, int lower_bound)
 *
 *************************************************************************************/
 
+
+
+
+BaseNIntegerList fill(int base)
+{
+	int nb, i = 0;
+	char* value = "";
+	char* pter;
+	BaseNIntegerList input=createIntegerList(base);
+
+	printf("How many value do you want to input ?\n");
+
+	while (scanf("%d",&nb) != 1)
+	{
+		printf("Sorry, your value is not valid.\nPlease try again\n");
+		scanf("%d",&nb);
+	}
+	for (i = 0; i < nb; ++i)
+	{
+
+		printf("Enter your %d th value\n",i+1 );
+		scanf("%s",value);
+		pter = value;
+		strtol(value,&pter,base);
+		if (strcmp(value,pter)!=0)
+		{
+			do{
+				printf("Your value is not good at all\n");
+				scanf("%s",value);
+				pter = value;
+			}
+			while(strcmp(value,pter)!=0);
+		}else{
+			input = insertTail(input,value);
+		}
+	}
+
+	return input;
+}
+/**************************************************************************************
+*
+*Fill a linked list following the base and return it
+*Parameters: base
+*
+*************************************************************************************/
 
 
 //#endif
