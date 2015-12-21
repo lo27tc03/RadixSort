@@ -20,23 +20,27 @@ BaseNIntegerListOfList createBucketList (int base)
 BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
 {
 		BaseNIntegerListOfList bucketlist = createBucketList(list.base);
+		char* temp;
+		char chartemp;
 		if(list.size == 0)
 		{
 			bucketlist.error = TRUE;
 			return bucketlist;
 		}
 		int bucket;
-		while(!isEmpty(list))
+		while(isEmpty(list) == FALSE)
 		{
 
-			char* temp = list.head->value;
+			//printf("%s\n", list.head->value);
+			temp = list.head->value;
 
 			list = removeHead(list);
 
-			char chartemp = (char)temp[strlen(temp) - pos];
+			chartemp = temp[strlen(temp) - pos];
 
 			//printf("%c (debug)\n", chartemp);
 			bucket = strtol(&chartemp, 0, 36);
+
 			if (bucket > 17)
 			{
 					bucketlist.error = TRUE;
@@ -53,12 +57,12 @@ BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
 
 BaseNIntegerList buildIntegerList(BaseNIntegerListOfList bucketList)
 {
-	BaseNIntegerList output;
+	BaseNIntegerList output = createIntegerList(bucketList.base);
 	int i;
 
 	for(i = 0; i <= 16; ++i)
 	{
-		while(!isEmpty(bucketList.list[i]))
+		while(bucketList.list[i].size != 0)
 		{
 			output = insertTail(output, bucketList.list[i].head->value);
 			bucketList.list[i] = removeHead(bucketList.list[i]);
@@ -83,8 +87,3 @@ void deleteBucketList(BaseNIntegerListOfList listOfList)
 *(free the previously allocated memory)
 *
 *************************************************************************************/
-
-BaseNIntegerListOfList radixsort(BaseNIntegerListOfList listOfList)
-{
-	return listOfList;
-}

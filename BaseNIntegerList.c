@@ -1,4 +1,5 @@
 #include <BaseNIntegerList.h>
+#include <BaseNIntegerListOfList.h>
 #include <string.h>
 
 BaseNIntegerList createIntegerList (int base)
@@ -133,7 +134,7 @@ void deleteIntegerList(BaseNIntegerList l)
 
 char* sumIntegerList(BaseNIntegerList l)
 {
-	return "";
+	return NULL;
 }
 /**************************************************************************************
 *
@@ -145,9 +146,9 @@ char* sumIntegerList(BaseNIntegerList l)
 *
 *************************************************************************************/
 
-char* convertBaseToBinary(char* s, int n)
+char* convertBaseToBinary(char* s, int base)
 {
-	long int integer = strtol(s, 0, n);
+	long int integer = strtol(s, NULL, base);
 
 	int rem, i=1, binary=0;
 	while (integer!=0)
@@ -157,7 +158,8 @@ char* convertBaseToBinary(char* s, int n)
 		binary+=rem*i;
 		i*=10;
 	}
-	sprintf(s, "%d", binary);
+	printf("%d\n", binary);
+	snprintf(s, 19, "%d", binary);
 	return s;
 }
 
@@ -206,38 +208,38 @@ int get_And_Verify_Int(int test, int lower_bound, int upper_bound)
 
 BaseNIntegerList fill(int base)
 {
-	int nb, i = 0;
-	char* value = "";
-	char* pter;
-	BaseNIntegerList input=createIntegerList(base);
+	int nb, i;
+
+	char* value = NULL;
+	size_t size;
+
+	BaseNIntegerList input = createIntegerList(base);
 
 	printf("How many value do you want to input ?\n");
 
-	while (scanf("%d",&nb) != 1)
+	if(scanf("%d",&nb) != 1)
 	{
-		printf("Sorry, your value is not valid.\nPlease try again\n");
-		scanf("%d",&nb);
+		do
+			printf("Sorry, your value is not valid.\nPlease try again\n");
+		while(scanf("%d",&nb) != 1);
 	}
+	getline(&value, &size, stdin);
+
+	char *pos = NULL;
 	for (i = 0; i < nb; ++i)
 	{
-
 		printf("Enter your %d th value\n",i+1 );
-		scanf("%s",value);
-		pter = value;
-		strtol(value,&pter,base);
-		if (strcmp(value,pter)!=0)
-		{
-			do{
-				printf("Your value is not good at all\n");
-				scanf("%s",value);
-				pter = value;
-			}
-			while(strcmp(value,pter)!=0);
-		}else{
-			input = insertTail(input,value);
-		}
+		getline(&value, &size, stdin);
+
+		pos = strchr(value, '\n');
+		if (pos != NULL)
+			*pos = '\0';
+
+		input = insertTail(input,value);
+		value = NULL;
 	}
 
+    printf("\n\n");
 	return input;
 }
 /**************************************************************************************
@@ -247,5 +249,38 @@ BaseNIntegerList fill(int base)
 *
 *************************************************************************************/
 
+int maxIntegerLength(BaseNIntegerList list)
+{
+	int i;
+	ListElement* temp;
+	temp = list.head;
+	int length = 0;
+
+	for(i = 0; i < list.size; i++)
+	{
+		if(strlen(temp->value) > length)
+			length = strlen(temp->value);
+		temp = temp->next;
+	}
+
+	return length;
+}
+
+BaseNIntegerList radixSort(BaseNIntegerList list)
+{
+    BaseNIntegerListOfList lol = createBucketList(list.base); // lol as list of list
+    int length = maxIntegerLength(list);
+    int i;
+
+	printf("max : %d\n", length);
+
+    for(i = 1; i <= length; ++i)
+    {
+        lol = buildBucketList(list, i);
+        list = buildIntegerList(lol);
+
+    }
+    return list;
+}
 
 //#endif

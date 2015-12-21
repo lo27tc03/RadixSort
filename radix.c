@@ -4,38 +4,54 @@
 
 int main(int argc, char** argv)
 {
+    /*char test[20] = "66666            ";
+    //long int x = 6666444444666666666;
+    //int length = snprintf(0, 0, "%lu", x);
+    //printf("%d\n", length);
+    printf("%s\n", convertBaseToBinary(test, 10));
+    return 0;*/
+
+
+
     int base = 10;
+    ListElement *temp;
 
 
-    printf("\t|———————————————— Welcome In Our Radix Sort Programm ————————————————|\n\n\n\n");
+    printf("\t| Welcome In Our Radix Sort Programm |\n\n\n\n");
     printf("Implemented by G.Duvauchelle and S.Prost\tUTBM Students in L027\n\n\n\n");/*
     printf("What do you want to do ?\n\n1) Fullfill your List \n2) Select the base you want to work in \n3) Sort your list using Radix Sort \n4) Quit \n");*/
 
-
     //choice=get_And_Verify_Int(choice,1,4);  //voir BaseNIntegerList.c
 
-
-    printf("Enter a base between 2 and 16");
-    get_And_Verify_Int(base,2,16);
+    /*printf("Enter a base between 2 and 16");
+    get_And_Verify_Int(base,2,16);*/
 
     BaseNIntegerList input = createIntegerList(base);
+    BaseNIntegerList sortedList = createIntegerList(base);
 
     input = fill(base);
 
-    BaseNIntegerListOfList lol = createBucketList(10);
-    lol = buildBucketList(input, 1);
-    input = buildIntegerList(lol);
-    lol = buildBucketList(input, 2);
-    input = buildIntegerList(lol);
-    lol = buildBucketList(input, 3);
-    input = buildIntegerList(lol);
-    lol = buildBucketList(input, 4);
-    input = buildIntegerList(lol);
+    temp = input.head;
+    printf("unsorted list : ");
+    while(temp != NULL)
+    {
+        printf("%s\t", temp->value);
+        temp = temp->next;
+    }
+    printf("\n\n");
 
-    printf("%s, %s, %s \n", input.head->value,input.head->next->value, input.tail->value);
 
+    sortedList = radixSort(input);
+
+
+    temp = sortedList.head;
+    printf("sorted list : ");
+    while(temp != NULL)
+    {
+        printf("%s\t", temp->value);
+        temp = temp->next;
+    }
+    printf("\n\n");
 
     return EXIT_SUCCESS;
-
-
 }

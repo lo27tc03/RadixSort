@@ -119,4 +119,18 @@ int get_And_Verify_Int(int test, int upper_bound, int lower_bound);
 
 BaseNIntegerList fill(int base);
 
+
+int maxIntegerLength(BaseNIntegerList);
+
+BaseNIntegerList radixSort(BaseNIntegerList list);
+/************************************************************************************
+*
+*sorts the specified BaseNIntegerList using the proposed radix sort approach.
+*See Figures 3-7 for a detailed description of the expected behavior of this function.
+*
+*
+************************************************************************************/
+
+
+
 #endif

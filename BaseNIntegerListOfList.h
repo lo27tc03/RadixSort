@@ -57,12 +57,5 @@ void deleteBucketList(BaseNIntegerListOfList);
 *
 *************************************************************************************/
 
-BaseNIntegerListOfList radixsort(BaseNIntegerListOfList);
-/************************************************************************************
-*
-*sorts the specified BaseNIntegerList using the proposed radix sort approach.
-*See Figures 3-7 for a detailed description of the expected behavior of this function.
-*
-*
-************************************************************************************/
+
 #endif
