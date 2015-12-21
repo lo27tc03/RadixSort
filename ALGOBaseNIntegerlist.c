@@ -148,3 +148,18 @@ END
 Function : convertBinaryToBase(s: char*, n : Integer) : char*
 BEGIN
 END
+
+/*******************************************************************************************/
+
+
+Function get_And_Verify_Int(test : Integer ,upper_bound :  Integer ,lower_bound :  Integer ) : Integer
+BEGIN
+	read test
+	
+	while (test>upper_bound OR test<lower_bound) do
+		print "Your choice is not valid, please try again."
+		read test
+	done
+
+	get_And_Verify_Int <-- test
+END
