@@ -113,27 +113,7 @@ END
 /*******************************************************************************************/
 Process : deleteIntegerList (l : BaseNIntegerList) //////////A REPRENDRE C MODIFIÉ
 BEGIN
-	if head(l) = UNDEFINED then
-		deleteIntegerList<--l
-	else
-		if head(l)-->next <-- UNDEFINED then
-			free(l)
-			l<--UNDEFINED
-			deleteIntegerList<--EXIT_SUCCESS
-		else
-			BaseNIntegerList* p , k
-			p<--k<--l
-			while head(l)--> =/= UNDEFINED do 
-				k<--l
-				head(l)<-- head(l)-->next
-				free(k)
-				k<--UNDEFINED
-				k<--head(l)
-			done
-			l<--UNDEFINED
-			deleteIntegerList<--EXIT_SUCCESS
-		endif
-	endif
+	
 END
 /*******************************************************************************************/
 
