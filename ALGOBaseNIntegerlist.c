@@ -138,8 +138,32 @@ END
 /*******************************************************************************************/
 
 
+Function : sumIntegerList(l : BaseNIntegerList) : char*
+BEGIN
+END
+
+/*******************************************************************************************/
+
+
 Function : convertBaseToBinary(s : char*, n : Integer) : Integer
 BEGIN
+	long Integer integer <-- strtol(s,UNDEFINED,base)
+
+	Integer rem
+	Integer i<--1
+	Integer binary<--0
+
+	while(integer =/= 0) do 
+		rem<--integer%2
+		integer/<--2
+		binary+<--rem*i
+		i*<--10
+	done
+
+	printf(binary)
+	snprintf(s,19,binary)
+
+	convertBaseToBinary<--s
 END
 
 /*******************************************************************************************/
@@ -163,3 +187,86 @@ BEGIN
 
 	get_And_Verify_Int <-- test
 END
+
+/*******************************************************************************************/
+
+
+Function : fill(base : Integer) : BaseNIntegerList
+BEGIN
+	Integer nb
+	Integer i
+	char* value <-- UNDEFINED
+	size_t size
+
+	BaseNIntegerList input <-- createIntegerList(base)
+
+	printf("How many value do you want to input?")
+
+	if (scanf(nb) =/= 1) then
+		do
+			printf("Sorry, your value is not valid. Please try again")
+		while(scanf(nb) =/= 1)
+		done
+	endif
+	getline(value,size,stdin)
+
+	char *pos <-- UNDEFINED
+
+	for (i=0 to i<nb increasing one by one) do
+		printf("Enter your "i+1" th value")
+		getline(value,size,stdin)
+
+		pos<--strchr(value, '\n')
+		if (pos =/= UNDEFINED) then
+			*pos <--'\0'
+		endif
+		input<--insertTail(input,value)
+		value<--UNDEFINED
+	done
+
+	fill<-- input
+
+END
+
+
+/*******************************************************************************************/
+
+
+Function maxIntegerLength(list : BaseNIntegerList) : Integer
+BEGIN
+	Integer i
+	ListElement* temp
+	temp<--head(list)
+	Integer length<--0
+
+	for (i=0 to i<size(list) increasing one by one) do 
+		if (strlen(value(temp))>length) then
+			length<--strlen(value(temp))
+		endif
+		temp<--next(temp)
+	done
+
+	maxIntegerLength<--lenght
+END
+
+
+/*******************************************************************************************/
+
+Function radixSort(list : BaseNIntegerList) : BaseNIntegerList
+BEGIN
+	BaseNIntegerList lol<--createBucketList(base(list))
+	Integer length <-- maxIntegerLength(list)
+	Integer i
+
+	printf("max : length")
+
+	for (i=1 to i<= length increasing one by one) do 
+		lol<--buildBucketList(list,i)
+		list<--buildIntegerList(lol)
+	done
+
+	radixSort<--list
+END
+
+
+

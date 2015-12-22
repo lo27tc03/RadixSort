@@ -2,6 +2,13 @@
 #include <BaseNIntegerListOfList.h>
 #include <string.h>
 
+
+/**************************************************************************************
+*
+*Creates a new empty BaseNIntegerList for storing integers in the specified base
+*Parameters : integer of the base
+*
+*************************************************************************************/
 BaseNIntegerList createIntegerList (int base)
 {
 
@@ -14,6 +21,12 @@ BaseNIntegerList createIntegerList (int base)
 	return l;
 }
 
+
+/*************************************************************************************
+*Test if the list is empty
+*Return 1 if empty, 0 else
+*Parameters : BaseNintegerList to test
+**************************************************************************************/
 BOOL isEmpty (BaseNIntegerList l)
 {
 	if(l.size == 0)
@@ -22,6 +35,13 @@ BOOL isEmpty (BaseNIntegerList l)
 		return FALSE;
 }
 
+
+/*************************************************************************************
+*
+*Adds the specified integer (char*, represented in the considered base) at the beginning of the specified list
+*Parameters : BaseNintegerList , integer to add
+*
+**************************************************************************************/
 BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
@@ -46,6 +66,14 @@ BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 	return l;
 }
 
+
+
+/*************************************************************************************
+*
+*Adds the specified integer (char*) at the end of the specified list
+*Parameters : BaseNintegerList , integer to add
+*
+**************************************************************************************/
 BaseNIntegerList insertTail (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
@@ -69,6 +97,13 @@ BaseNIntegerList insertTail (BaseNIntegerList l, char* s)
 	return l;
 }
 
+
+/**************************************************************************************
+*
+*Removes the first element of the specified list
+*Parameters : BaseNIntegerList
+*
+*************************************************************************************/
 BaseNIntegerList removeHead(BaseNIntegerList l)
 {
 	if (isEmpty(l) == TRUE)
@@ -99,6 +134,15 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 
 }
 
+
+
+
+/**************************************************************************************
+*
+*Removes the last element of the specified list
+*Parameters : BaseNIntegerList
+*
+*************************************************************************************/
 BaseNIntegerList removeTail(BaseNIntegerList l)
 {
 	if(l.size==0)
@@ -126,26 +170,42 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 	return l;
 }
 
+
+/**************************************************************************************
+*
+*Clears and deletes the specified BaseNIntegerList
+*(free the previously allocated memory)
+*Parameters : l BaseNIntegerList
+*
+*************************************************************************************/
 void deleteIntegerList(BaseNIntegerList l)
 {
 	while(l.size != 0)
 		removeHead(l);
 }
 
+
+/**************************************************************************************
+*
+*Sums all the integers defined in the
+*specified list using the Binary addition (base 2)
+*and returns the corresponding results as
+*an integer (char*) defined in the base of the list
+*Parameters : l BaseNIntegerList
+*
+*************************************************************************************/
 char* sumIntegerList(BaseNIntegerList l)
 {
 	return NULL;
 }
+
 /**************************************************************************************
 *
-*sums all the integers defined in the
-*specified list using the Binary addition (base 2)
-*and returns the corresponding results as
-*an integer (char*) defined in the base of the list
-*
+*Converts the specified integer represented with the specified base
+*into a corresponding binary integer.
+*Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
-
 char* convertBaseToBinary(char* s, int base)
 {
 	long int integer = strtol(s, NULL, base);
@@ -162,29 +222,25 @@ char* convertBaseToBinary(char* s, int base)
 	snprintf(s, 19, "%d", binary);
 	return s;
 }
-
+ 
 /**************************************************************************************
 *
-* converts the specified integer s
-* represented with the specified base (Integer, second parameter)
-* into a corresponding binary integer (base 2).
-*
+*Converts an integer represented using a binary base into a corresponding 
+*integer represented with the specified base
+*Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
-
 char* convertBinaryToBase(char* s, int n)
 {
 	return s;
 }
+
 /**************************************************************************************
 *
-*converts an integer represented using a binary base (base 2)
-*into a corresponding integer represented
-*with the specified base (Integer, second parameter)
-*
+*Get an integer and verify if it is inbetween the two bounds
+*Parameters: test , upper_bound , lower_bound
 *
 *************************************************************************************/
-
 int get_And_Verify_Int(int test, int lower_bound, int upper_bound)
 {
 	scanf("%d",&test);
@@ -196,16 +252,16 @@ int get_And_Verify_Int(int test, int lower_bound, int upper_bound)
 
     return test;
 }
+
+
+
+
 /**************************************************************************************
 *
-*Get an integer and verify if it is inbetween the two bounds
-*Parameters: test , upper_bound , lower_bound
+*Fill a linked list following the base and return it
+*Parameters: base
 *
 *************************************************************************************/
-
-
-
-
 BaseNIntegerList fill(int base)
 {
 	int nb, i;
@@ -242,12 +298,7 @@ BaseNIntegerList fill(int base)
     printf("\n\n");
 	return input;
 }
-/**************************************************************************************
-*
-*Fill a linked list following the base and return it
-*Parameters: base
-*
-*************************************************************************************/
+
 
 int maxIntegerLength(BaseNIntegerList list)
 {

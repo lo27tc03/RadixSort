@@ -73,39 +73,38 @@ BaseNIntegerList removeTail(BaseNIntegerList);
 void deleteIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
-*clears and deletes the specified BaseNIntegerList
+*Clears and deletes the specified BaseNIntegerList
 *(free the previously allocated memory)
+*Parameters : l BaseNIntegerList
 *
 *************************************************************************************/
 
 char* sumIntegerList(BaseNIntegerList l);
 /**************************************************************************************
 *
-*sums all the integers ••••defined in the
-*specified list using t••••he Binary addition (base 2)
-*and returns the corres••••ponding results as
+*Sums all the integers defined in the
+*specified list using the Binary addition (base 2)
+*and returns the corresponding results as
 *an integer (char*) defined in the base of the list
-*
+*Parameters : l BaseNIntegerList
 *
 *************************************************************************************/
 
 char* convertBaseToBinary(char* s, int n);
 /**************************************************************************************
 *
-*converts the specified integer (char*)
-*represented with the specified base (Integer, second parameter)
-*into a corresponding binary integer (base 2).
-*
+*Converts the specified integer represented with the specified base
+*into a corresponding binary integer.
+*Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
 
 char* convertBinaryToBase(char* s, int n);
 /**************************************************************************************
 *
-*converts an integer represented using a binary base (base 2)
-*into a corresponding integer represented
-*with the specified base (Integer, second parameter)
-*
+*Converts an integer represented using a binary base into a corresponding 
+*integer represented with the specified base
+*Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
 
@@ -118,6 +117,12 @@ int get_And_Verify_Int(int test, int upper_bound, int lower_bound);
 *************************************************************************************/
 
 BaseNIntegerList fill(int base);
+/**************************************************************************************
+*
+*Fill a linked list following the base and return it
+*Parameters: base
+*
+*************************************************************************************/
 
 
 int maxIntegerLength(BaseNIntegerList);
