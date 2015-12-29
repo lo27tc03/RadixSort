@@ -35,7 +35,7 @@ BaseNIntegerList buildIntegerList(BaseNIntegerListOfList);
 *
 *Builds a new BaseNIntegerList from the specified BaseNIntegerListOfList
 *(respecting the ascending order on the buckets)
-*Parameters : BaseNIntegerListOfList 
+*Parameters : BaseNIntegerListOfList
 *
 *************************************************************************************/
 
@@ -55,6 +55,8 @@ void deleteBucketList(BaseNIntegerListOfList);
 *Parameters : BaseNIntegerListOfList
 *
 *************************************************************************************/
+
+void printListOfList(BaseNIntegerListOfList lol);
 
 
 #endif

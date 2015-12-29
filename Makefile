@@ -5,7 +5,7 @@
 #		clean : cleans temporary files and binary files
 
 CXX = gcc
-CFLAGS = -Wall -Werror -pedantic -fPIC -ggdb
+CFLAGS = -fPIC -ggdb -Wall -Werror -pedantic 
 #penser à retirer -g quand on rendra le projet
 LIBSDIR = -L. -L/usr/lib
 INCLUDEDIR = -I. -I/usr/include

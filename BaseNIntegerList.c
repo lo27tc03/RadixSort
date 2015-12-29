@@ -45,8 +45,9 @@ BOOL isEmpty (BaseNIntegerList l)
 BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
+	newel->value = calloc(64, 1);
 
-	newel->value = s;
+	strcpy(newel->value, s);
 	newel->previous = NULL;
 
 	if (isEmpty(l) == TRUE)
@@ -77,8 +78,9 @@ BaseNIntegerList insertHead (BaseNIntegerList l, char* s)
 BaseNIntegerList insertTail (BaseNIntegerList l, char* s)
 {
 	ListElement* newel = (ListElement*)malloc(sizeof(ListElement));
+	newel->value = calloc(64, 1);
 
-	newel->value = s;
+	strcpy(newel->value, s);
 	newel->next = NULL;
 
 	if (isEmpty(l) == TRUE)
@@ -113,6 +115,7 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 	{
 		if (l.size==1)
 		{
+			free(l.tail->value);
 			free(l.head);
 			l.head = NULL;
 			l.tail = NULL;
@@ -125,6 +128,7 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 			l.head = l.head->next;
 			l.head->previous = NULL;
 			l.size--;
+			free(p->value);
 			free(p);
 			p = NULL;
 		}
@@ -150,6 +154,7 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 	else{
 		if (l.size==1)
 		{
+			free(l.tail->value);
 			free(l.tail);
 			l.head = NULL;
 			l.tail = NULL;
@@ -162,6 +167,7 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 			l.tail = l.tail->previous;
 			l.tail->next = NULL;
 			l.size --;
+			free(p->value);
 			free(p);
 			p = NULL;
 		}
@@ -206,33 +212,90 @@ char* sumIntegerList(BaseNIntegerList l)
 *Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
-char* convertBaseToBinary(char* s, int base)
+char* convertBaseToBinary(char* input, int base)
 {
-	long int integer = strtol(s, NULL, base);
+	char binary[64];
+	long int integer = strtol(input, NULL, base);
 
-	int rem, i=1, binary=0;
+	int rem, i=0;
+
 	while (integer!=0)
 	{
 		rem=integer%2;
 		integer/=2;
-		binary+=rem*i;
-		i*=10;
+		binary[i] = rem;
+		i++;
 	}
-	printf("%d\n", binary);
-	snprintf(s, 19, "%d", binary);
-	return s;
+	binary[i] = '\0';
+
+	int j;/*
+	for(j = 0; j < i; j++)
+		binary[j] += 48;*/
+
+
+	input[i] = '\0';
+	i--;
+
+	for(j = 0; i >= 0; i--)
+		input[i] = binary[j++];
+
+
+	return input;
 }
- 
+
 /**************************************************************************************
 *
-*Converts an integer represented using a binary base into a corresponding 
+*Converts an integer represented using a binary base into a corresponding
 *integer represented with the specified base
 *Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
-char* convertBinaryToBase(char* s, int n)
+
+char* convertBinaryToBase(char* s, int base)
 {
+	int output = 0;
+	char temp[64];
+	int coef = 1;
+	int i = 0;
+	size_t length = strlen(s);
+	strcpy(temp, s);
+
+	for(i = 0; i < length; i++)
+		temp[i] = s[length - i -1];
+
+	printf("%s\n", temp);
+
+	for(i = 0; i < length; ++i)
+	{
+		output += coef * (temp[i] -48);
+		coef = coef * 2;
+	}
+
+	sprintf(s, "%d", output);
+
+	char *a = convDecToBase(strtol(s, NULL, 10), base);
+	strcpy(s, a);
+	free(a);
+
 	return s;
+}
+
+char* convDecToBase(int dec, int base)
+{
+	if(dec == 0)
+		return 0;
+
+	char NUMS[] = "0123456789ABCDEF";
+	char *res = calloc(64, sizeof(char));
+	int i = 0;
+
+	do{
+		res[i] = NUMS[dec%base];
+        dec /= base;
+		i++;
+	}while(dec != 0);
+
+	return res;
 }
 
 /**************************************************************************************
@@ -241,16 +304,15 @@ char* convertBinaryToBase(char* s, int n)
 *Parameters: test , upper_bound , lower_bound
 *
 *************************************************************************************/
-int get_And_Verify_Int(int test, int lower_bound, int upper_bound)
+void get_And_Verify_Int(int *test, int lower_bound, int upper_bound)
 {
-	scanf("%d",&test);
-    while(test>upper_bound || test<lower_bound)
+	scanf("%d",test);
+    while(*test>upper_bound || *test<lower_bound)
     {
-        printf("Your choice is not valid,\n please try again.\n");
-        scanf("%d",&test);
+        printf("Your choice is not valid, please try again.\n");
+        scanf("%d",test);
     }
 
-    return test;
 }
 
 
@@ -317,21 +379,54 @@ int maxIntegerLength(BaseNIntegerList list)
 	return length;
 }
 
+
 BaseNIntegerList radixSort(BaseNIntegerList list)
 {
     BaseNIntegerListOfList lol = createBucketList(list.base); // lol as list of list
     int length = maxIntegerLength(list);
     int i;
 
-	printf("max : %d\n", length);
 
     for(i = 1; i <= length; ++i)
     {
         lol = buildBucketList(list, i);
+		//printListOfList(lol);
         list = buildIntegerList(lol);
-
     }
     return list;
+}
+
+
+BaseNIntegerList loadDemo()
+{
+    FILE *demo = NULL;
+    char value[64];
+	char *pos = NULL;
+    BaseNIntegerList input = createIntegerList(10);
+
+
+    demo = fopen("demo.txt", "r");
+    if(demo == NULL)
+    {
+        printf("couldnt open demo file\n");
+        exit(1);
+    }
+
+
+    printf("\n\nRemember: you can manually change demo.txt with your text editor\n\n");
+
+
+    while(fgets(value, 64, demo) != NULL)
+    {
+		pos = strchr(value, '\n');
+		*pos = '\0';
+        input = insertTail(input, value);
+    }
+
+    fclose(demo);
+
+	return input;
+
 }
 
 //#endif

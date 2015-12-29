@@ -102,13 +102,14 @@ char* convertBaseToBinary(char* s, int n);
 char* convertBinaryToBase(char* s, int n);
 /**************************************************************************************
 *
-*Converts an integer represented using a binary base into a corresponding 
+*Converts an integer represented using a binary base into a corresponding
 *integer represented with the specified base
 *Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
+char* convDecToBase(int dec, int base);
 
-int get_And_Verify_Int(int test, int upper_bound, int lower_bound);
+void get_And_Verify_Int(int *test, int lower_bound, int upper_bound);
 /**************************************************************************************
 *
 *Get an integer and verify if it is inbetween the two bounds
@@ -136,6 +137,6 @@ BaseNIntegerList radixSort(BaseNIntegerList list);
 *
 ************************************************************************************/
 
-
+BaseNIntegerList loadDemo();
 
 #endif
