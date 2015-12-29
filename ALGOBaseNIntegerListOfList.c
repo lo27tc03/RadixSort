@@ -65,7 +65,29 @@ BEGIN
 
 	buildIntegerList<-- output
 END
+/*******************************************************************************************/
+Procedure : printListOfList(lol :BaseNIntegerListOfList)
+BEGIN
+	Integer i<--0
+	ListElement *temp <-- head(list[0](lol))	//pas sur là
 
+	for (i=0 to i=15 increasing one by one) do 
+		temp<--head(list[0](lol))	//pas sur là
+		printf(i)
+		while (temp =/= UNDEFINED) do 
+			printf(value(temp))
+			temp<--next(temp)
+		done
+		printf("\n")
+	done
+
+	while(getchar() =/= '\n') do 
+		system("clear")
+	done
+
+	printListOfList<--EXIT_SUCCESS
+
+END
 /*******************************************************************************************/
 
 Function : addIntegerIntoBucket (listOfList : BaseNIntegerListOfList, integer : char* , bucket : Integer)
