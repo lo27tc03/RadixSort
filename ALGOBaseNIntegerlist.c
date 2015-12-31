@@ -149,13 +149,56 @@ END
 /*******************************************************************************************/
 
 
-Function : convertBinaryToBase(s: char*, n : Integer) : char*
+Function : convertBinaryToBase(s: char*, base : Integer) : char*
 BEGIN
+	Integer output<--0
+	char temp[64]
+	Integer coef<--1
+	Integer i<--0
+	size_t length<--strlen(s)
+	strcpy(temp,s)
+
+	for (i=0 to i<length increasing one by one) do 
+		temp[i]<-- s[length - i - 1]
+	done
+
+	printf(temp)
+
+	for (i=0 to i<length increasing one by one) do 
+		output += coef * (temp[i]-48)
+		coef <-- coef * 2
+	done
+
+	sprintf(s, "%d",output)
+
+	char *a = convDecToBase(strtol(s,UNDEFINED,10),base)
+	strcpy(s,a)
+	free(a)
+
+	convertBinaryToBase<--s
+
 END
 
 /*******************************************************************************************/
+Function convDecToBase(dec : Integer, base : Integer): char*
+BEGIN
+	if (dec = 0) then
+		convDecToBase<--0
+	endif
 
+	char NUMS[] <-- "0123456789ABCDEF"
+	char *res = calloc(64, sizeof(char))
+	int i<--0
 
+	do (res[i]<--NUMS[dec%base]
+		dec/= base
+		i<--i+1)
+	while(dec =/= 0)
+
+	convDecToBase<--res
+END
+
+/*******************************************************************************************/
 Function get_And_Verify_Int(test : Integer ,upper_bound :  Integer ,lower_bound :  Integer ) : Integer
 BEGIN
 	read test
@@ -238,7 +281,6 @@ BEGIN
 	Integer length <-- maxIntegerLength(list)
 	Integer i
 
-	printf("max : length")
 
 	for (i=1 to i<= length increasing one by one) do 
 		lol<--buildBucketList(list,i)
@@ -248,5 +290,34 @@ BEGIN
 	radixSort<--list
 END
 
+/*******************************************************************************************/
+
+
+Function loadDemo(void): BaseNIntegerList
+BEGIN
+	FILE *demo <-- UNDEFINED
+	char value[64]
+	char *pos<--UNDEFINED
+	BaseNIntegerList input<--createIntegerList(10)
+
+	demo<--fopen("demo.txt","r")
+
+	if (demo = UNDEFINED) then
+		printf("couldn't open demo file")
+		exit(1)
+	endif
+
+	printf("Remember : you can manually change demo.txt with your text editor\n")
+
+	while (fgets(value, 64, demo) =/= UNDEFINED) do 
+		pos<--strchr(value, '\n')
+		*pos<--'\0'
+		input<-- insertTail(input,value)
+	done
+
+	fclose(demo)
+
+	loadDemo<--input
+END
 
 
