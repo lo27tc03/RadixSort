@@ -113,13 +113,88 @@ END
 /*******************************************************************************************/
 Process : deleteIntegerList (l : BaseNIntegerList) //////////A REPRENDRE C MODIFIÉ
 BEGIN
-	
+	while(size(l)=/=0) do 
+		removeHead(l)
+	done
 END
 /*******************************************************************************************/
 
 
 Function : sumIntegerList(l : BaseNIntegerList) : char*
 BEGIN
+	char *sum <-- calloc(64,1)
+	char bintemp[64]<--{0}
+	char sumtemp[64]<--{0}
+	Integer binary1
+	Integer binary2
+	Integer c<--0 //carry
+	integer i<--0, j<--0
+
+	sum[0]<--'0'
+	ListElement* temp <-- head(l)
+
+	while(temp=/=UNDEFINED) do 
+		value(temp)<--convertBaseToBinary(value(temp),base(l))
+		temp<--next(temp)
+	done
+
+	printList(l)
+
+	temp<--head(l)
+
+	while(temp=/= UNDEFINED) do 
+		i<--0
+		c<--0
+		strcpy(bintemp,value(temp))
+		strcpy(sumtemp,sum)
+		while(i< strlen(bintemp) || i< strlen(sumtemp)) do 
+			if(i<strlen(bintemp)) then
+				binary1<-- bintemp[strlen(bintemp)-i-1] - '0'
+			else 
+				binary1<--0
+			endif
+			if (i<strlen(sumtemp))then
+				binary2<--sumtemp[i]-'0'
+			else
+				binary2<--0
+			endif
+
+			printf("1 = "binary1 "2 =" binary2)
+
+			sumtemp[i++]<--((binary1+ binary2 + c)mod(2))+'0'
+			printf("sum" (binary1 + binary2 +c)mod(2))
+			c<--(binary1 + binary2 + c) / 2
+
+			if(i = 64) then
+				printf("The sum exceeds 2^64-1, cannot continue")
+				sumIntegerList<--sumIntegerList
+			endif
+		done
+
+		if(c=/=0) then
+			sumtemp[i++]<--49
+			printf("carry" sumtemp[i-1])
+		endif
+
+		strcpy(sum, sumtemp)
+		printf(sum)
+
+		for(j=0 to j<64 increasing one by one) do 
+			sumtemp[j]<--0
+		done
+
+		temp<-- next(temp)
+	done
+
+	strcpy(sumtep, sum)
+
+	for(j=0 to j<strlen(sumtemp) increasing one by one) do 
+		sum[j]<-- sumtemp[strlen(sumtemp) - j - 1]
+	done
+
+	convertBinaryToBase(sum,10)
+
+	sumIntegerList<--sum
 END
 
 /*******************************************************************************************/
@@ -320,4 +395,36 @@ BEGIN
 	loadDemo<--input
 END
 
+/*******************************************************************************************/
 
+Procedure printList(list : BaseNIntegerList)
+BEGIN
+	ListElement *temp
+	temp<--head(list)
+	while(temp=/=UNDEFINED)
+		printf(value(temp))
+		temp<--next(temp)
+	done
+END
+
+/*******************************************************************************************/
+
+Procedure tryConvert(list :BaseNIntegerList)
+BEGIN
+	ListElement *temp<--head(list)
+	Integer i<--0
+
+	for(i=0 to i<size(list) increasing one by one) do 
+		convertBaseToBinary(value(temp),base(list))
+		temp<--next(temp)
+	done
+
+	printList(list)
+
+	temp<--head(list)
+	while(temp=/=UNDEFINED) do 
+		convertBinaryToBase(value(temp),base(list))
+		temp<--next(temp)
+	done
+	printList(list)
+END
