@@ -115,7 +115,7 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 	{
 		if (l.size==1)
 		{
-			free(l.tail->value);
+			//free(l.tail->value);
 			free(l.head);
 			l.head = NULL;
 			l.tail = NULL;
@@ -128,7 +128,7 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 			l.head = l.head->next;
 			l.head->previous = NULL;
 			l.size--;
-			free(p->value);
+			//free(p->value);
 			free(p);
 			p = NULL;
 		}
@@ -202,7 +202,95 @@ void deleteIntegerList(BaseNIntegerList l)
 *************************************************************************************/
 char* sumIntegerList(BaseNIntegerList l)
 {
-	return NULL;
+	char *sum = calloc(64, 1);
+	char bintemp[64] = {0};
+	char sumtemp[64] = {0};
+	int binary1;
+	int binary2;
+	int c = 0; //carry
+	int i = 0, j = 0;
+
+
+	sum[0] = '0';
+
+
+	ListElement* temp = l.head;
+
+
+	while(temp != NULL)
+	{
+		temp->value = convertBaseToBinary(temp->value, l.base);
+		temp = temp->next;
+	}
+
+	printList(l);
+
+	temp = l.head;
+
+	while(temp != NULL)
+	{
+		i = 0;
+		c = 0;
+		strcpy(bintemp, temp->value);
+		strcpy(sumtemp, sum);
+		while (i  < strlen(bintemp) || i < strlen(sumtemp) )
+	    {
+			if(i<strlen(bintemp))
+				binary1 = bintemp[strlen(bintemp)-i-1] - '0';
+			else
+				binary1 = 0;
+
+			if(i<strlen(sumtemp))
+				binary2 = sumtemp[i] - '0';
+			else
+				binary2 = 0;
+
+			printf("\n1 = %d, 2 = %d  ", binary1, binary2);
+
+	        sumtemp[i++] = ((binary1 + binary2 + c) % 2) + '0';
+			printf("sum %d", ((binary1 + binary2 + c) % 2));
+	        c =(binary1 + binary2 + c) / 2;
+
+
+			if (i == 64)
+			{
+				printf("\nthe sum exceeds 2^64-1, cannot continue\n");
+				return sum;
+			}
+
+
+	    }
+
+
+	    if (c != 0)
+		{
+	        sumtemp[i++] = 49;
+			printf("\ncarry %c\n", sumtemp[i-1]);
+		}
+
+
+		strcpy(sum, sumtemp);
+
+		printf("\n%s\n", sum);
+
+		for(j=0;j<64;j++)
+			sumtemp[j] = 0;
+
+		temp = temp->next;
+
+	}
+
+	strcpy(sumtemp, sum);
+
+	for(j=0;j<strlen(sumtemp);j++)
+	{
+		sum[j] = sumtemp[strlen(sumtemp) - j - 1];
+	}
+
+	convertBinaryToBase(sum, 10);
+
+	return sum;
+
 }
 
 /**************************************************************************************
@@ -214,6 +302,7 @@ char* sumIntegerList(BaseNIntegerList l)
 *************************************************************************************/
 char* convertBaseToBinary(char* input, int base)
 {
+
 	char binary[64];
 	long int integer = strtol(input, NULL, base);
 
@@ -226,19 +315,16 @@ char* convertBaseToBinary(char* input, int base)
 		binary[i] = rem;
 		i++;
 	}
+	printf("\n");
 	binary[i] = '\0';
 
-	int j;/*
-	for(j = 0; j < i; j++)
-		binary[j] += 48;*/
-
+	int j;
 
 	input[i] = '\0';
 	i--;
 
 	for(j = 0; i >= 0; i--)
-		input[i] = binary[j++];
-
+		input[i] = binary[j++] + '0';
 
 	return input;
 }
@@ -253,29 +339,33 @@ char* convertBaseToBinary(char* input, int base)
 
 char* convertBinaryToBase(char* s, int base)
 {
-	int output = 0;
+	long int output = 0;
 	char temp[64];
-	int coef = 1;
+	long int coef = 1;
 	int i = 0;
+
 	size_t length = strlen(s);
 	strcpy(temp, s);
 
 	for(i = 0; i < length; i++)
 		temp[i] = s[length - i -1];
 
-	printf("%s\n", temp);
 
 	for(i = 0; i < length; ++i)
 	{
-		output += coef * (temp[i] -48);
+		output += coef * (temp[i] - '0');
 		coef = coef * 2;
 	}
 
-	sprintf(s, "%d", output);
+	sprintf(s, "%ld", output);
 
+
+	if(base != 10)
+	{
 	char *a = convDecToBase(strtol(s, NULL, 10), base);
 	strcpy(s, a);
 	free(a);
+	}
 
 	return s;
 }
@@ -402,7 +492,7 @@ BaseNIntegerList loadDemo()
     FILE *demo = NULL;
     char value[64];
 	char *pos = NULL;
-    BaseNIntegerList input = createIntegerList(10);
+	int base;
 
 
     demo = fopen("demo.txt", "r");
@@ -411,10 +501,12 @@ BaseNIntegerList loadDemo()
         printf("couldnt open demo file\n");
         exit(1);
     }
-
-
     printf("\n\nRemember: you can manually change demo.txt with your text editor\n\n");
 
+	fscanf(demo, "base : %d", &base);
+    BaseNIntegerList input = createIntegerList(base);
+
+	fgets(value, 64, demo);
 
     while(fgets(value, 64, demo) != NULL)
     {
@@ -428,5 +520,44 @@ BaseNIntegerList loadDemo()
 	return input;
 
 }
+
+void printList(BaseNIntegerList list)
+{
+	ListElement *temp;
+    temp = list.head;
+    while(temp != NULL)
+    {
+        printf("%s\n", temp->value);
+        temp = temp->next;
+    }
+    printf("\n\n");
+}
+
+
+void tryConvert(BaseNIntegerList list)
+{
+	ListElement *temp = list.head;
+	int i = 0;
+
+	for(;i<list.size;++i)
+	{
+		convertBaseToBinary(temp->value, list.base);
+		temp = temp->next;
+	}
+
+	printList(list);
+	printf("\n\n");
+
+	temp = list.head;
+	while(temp!=NULL)
+	{
+		convertBinaryToBase(temp->value, list.base);
+		temp = temp->next;
+	}
+	printList(list);
+	printf("\n\n");
+}
+
+
 
 //#endif

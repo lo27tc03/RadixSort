@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
     int base = 10;
-    ListElement *temp;
+    //ListElement *temp;
 
 
     system("clear");
@@ -15,9 +15,12 @@ int main(int argc, char** argv)
     printf("What do you want to do ?\n\n1) Input your own list\n2) Try the list in the demo.txt file \n3) Quit \n\n");
 
     int choice = 0;
-    get_And_Verify_Int(&choice,1,3);  //voir BaseNIntegerList.c
+    get_And_Verify_Int(&choice,1,3);
+
     BaseNIntegerList input;
     BaseNIntegerList sortedList;
+
+    system("clear");
 
     switch (choice)
     {
@@ -32,7 +35,7 @@ int main(int argc, char** argv)
 
         case 2:
             input = loadDemo();
-            sortedList = createIntegerList(base);
+            sortedList = createIntegerList(input.base);
 
             break;
 
@@ -44,28 +47,35 @@ int main(int argc, char** argv)
 
 
 
-    temp = input.head;
     printf("The unsorted list is : \n");
-    while(temp != NULL)
-    {
-        printf("%s\n", temp->value);
-        temp = temp->next;
+    printList(input);
+
+    char *sum;
+
+    printf("\nWhat do you want to do now?\n\n"
+            "1) Sort and output the list\n"
+            "2) Try conversion functions \n"
+            "3) Sum the list \n"
+            "4) Quit \n\n");
+
+    get_And_Verify_Int(&choice,1,3);
+
+    switch (choice) {
+        case 1:
+            sortedList = radixSort(input);
+            printList(sortedList);
+            break;
+
+        case 2:
+            tryConvert(input);
+            break;
+
+        case 3:
+            sum = sumIntegerList(input);
+            printf("%s\n", sum);
+            free(sum);
     }
-    printf("\n\n");
-
-
-
-    sortedList = radixSort(input);
-
-
-    temp = sortedList.head;
-    printf("sorted list : ");
-    while(temp != NULL)
-    {
-        printf("%s\t", temp->value);
-        temp = temp->next;
-    }
-    printf("\n\n");
+    
 
     return EXIT_SUCCESS;
 }

@@ -2,6 +2,10 @@
 #define BASENINTEGERLISTOFLIST_H
 
 #include <BaseNIntegerList.h>
+#include <unistd.h>
+#include <math.h>
+#include <string.h>
+#include <time.h>
 
 typedef struct{
 	int base;

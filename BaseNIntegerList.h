@@ -139,4 +139,8 @@ BaseNIntegerList radixSort(BaseNIntegerList list);
 
 BaseNIntegerList loadDemo();
 
+void printList(BaseNIntegerList list);
+
+void tryConvert(BaseNIntegerList list);
+
 #endif

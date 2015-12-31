@@ -1,6 +1,4 @@
 #include <BaseNIntegerListOfList.h>
-#include <math.h>
-#include <string.h>
 
 
 BaseNIntegerListOfList createBucketList (int base)
@@ -31,15 +29,10 @@ BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
 		while(isEmpty(list) == FALSE)
 		{
 
-			//printf("%s\n", list.head->value);
 			temp = list.head->value;
-
-
-
 
 			chartemp = temp[strlen(temp) - pos];
 
-			//printf("%c (debug)\n", chartemp);
 			bucket = strtol(&chartemp, 0, 36);
 
 			if (bucket > 17)
@@ -106,6 +99,6 @@ void printListOfList(BaseNIntegerListOfList lol)
 		}
 		printf("\n");
 	}
-	while ( getchar() != '\n');
+	//while ( getchar() != '\n');
 	system("clear");
 }
