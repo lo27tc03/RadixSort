@@ -258,7 +258,7 @@ char* sumIntegerList(BaseNIntegerList l)
 	    }
 
 
-	    if (c != 0) 
+	    if (c != 0)
 		{
 	        sumtemp[i++] = 49;
 		}
@@ -403,7 +403,6 @@ void get_And_Verify_Int(int *test, int lower_bound, int upper_bound)
     {
 		while( getchar() != '\n' ); //avoid infinite loop
         printf("Your choice is not valid, please try again.\n");
-		fflush(stdin);
         scanf("%d",test);
     }
 
