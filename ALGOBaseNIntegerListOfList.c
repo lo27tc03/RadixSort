@@ -5,11 +5,11 @@ Function : createBucketList(base : Integer) : BaseNIntegerListOfList
 BEGIN
 	BaseNIntegerListOfList l 
 	base(l)<--base
-	error(l)<--UNDEFINED
+	error(l)<--FALSE
 
 	Integer i 
 	for i from 0 to 16 increasing one by one do 
-		list(l)[i]<--createBucketList(base)
+		list(l)[i]<--createIntegerList(base)
 	done
 
 	createBucketList<-- l 
@@ -18,24 +18,22 @@ END
 
 Function : buildBucketList (list : BaseNIntegerList , pos : Integer) : BaseNIntegerListOfList
 BEGIN
-	BaseNIntegerListOfList bucketList 
-	bucketList<-- createBucketList(base)
+	BaseNIntegerListOfList bucketList
+	bucketList<-- createBucketList(base(list))
+	char* temp
+	char chartemp
 
-	if size(list) = 0 then 
+	if (size(list) = 0) then 
 		error(bucketList) <-- TRUE
 		buildBucketList <-- bucketList
 	endif
 
 	Integer bucket;
-	Integer i<--0
 
 	while not isEmpty(list) do 
-		char* temp<--value(head(list))
+		temp<--value(head(list))
 
-		list<--removeHead(list)
-		char chartemp
-		chartemp<-- (char)temp[strlen(temp) - pos]
-		printf (chartemp " (debug)")
+		chartemp<-- temp[strlen(temp) - pos]
 		bucket<--strtol(&chartemp, 0, 36)
 
 		if bucket > 17 then 
@@ -44,6 +42,7 @@ BEGIN
 		endif
 
 		list(bucketList)[bucket]<--insertTail(list(bucketList)[bucket], temp)
+		list<--removeHead(list)
 	done
 
 	buildBucketList<-- bucketList
@@ -53,11 +52,11 @@ END
 
 Function : buildIntegerList(bucketList : BaseNIntegerListOfList) : BaseNIntegerList
 BEGIN
-	BaseNIntegerList output
+	BaseNIntegerList output<-- createIntegerList(base(bucketList))
 	Integer i
 
-	for i from 1 to 16 increasing one by one do 
-		while not isEmpty(list(bucketList)[i]) do 
+	for (i from 1 to i<=16 increasing one by one) do 
+		while (size(list[i](bucketList)) =/= 0)do 
 			output<-- insertTail(output, value(head(list(bucketList))))[i]
 			list(bucketList)[i]<--removeHead(list(bucketList)[i])
 		done
@@ -71,7 +70,7 @@ BEGIN
 	Integer i<--0
 	ListElement *temp <-- head(list[0](lol))	//pas sur là
 
-	for (i=0 to i=15 increasing one by one) do 
+	for (i=0 to i<16 increasing one by one) do 
 		temp<--head(list[0](lol))	//pas sur là
 		printf(i)
 		while (temp =/= UNDEFINED) do 
@@ -81,12 +80,7 @@ BEGIN
 		printf("\n")
 	done
 
-	while(getchar() =/= '\n') do 
-		system("clear")
-	done
-
-	printListOfList<--EXIT_SUCCESS
-
+	system("clear")
 END
 /*******************************************************************************************/
 
