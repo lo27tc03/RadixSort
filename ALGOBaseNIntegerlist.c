@@ -23,7 +23,9 @@ END
 Function : insertHead (l : BaseNIntegerList , s : char* ) : BaseNIntegerList
 BEGIN
 	newel <-- create(ListElement)
-	value(newel) <-- s
+	value(newel) <-- calloc(64,1)
+
+	strcpy(value(newel),s)
 	previous(newel) <-- UNDEFINED
 
 	if isEmpty(l) = TRUE then
@@ -44,7 +46,9 @@ END
 Function : insertTail (l : BaseNIntegerList , s : char*) : BaseNIntegerList
 BEGIN
 	newel <-- create(ListElement)
-	value(newel)<--s
+	value(newel)<--calloc(64,1)
+
+	strcpy(value(newel),s)
 	next(newel)<--UNDEFINED
 
 	if isEmpty(l) = TRUE then
@@ -167,7 +171,7 @@ BEGIN
 
 			if(i = 64) then
 				printf("The sum exceeds 2^64-1, cannot continue")
-				sumIntegerList<--sumIntegerList
+				sumIntegerList<--sum
 			endif
 		done
 
@@ -202,23 +206,29 @@ END
 
 Function : convertBaseToBinary(s : char*, n : Integer) : Integer
 BEGIN
+	char binary[64]
 	long Integer integer <-- strtol(s,UNDEFINED,base)
 
 	Integer rem
-	Integer i<--1
-	Integer binary<--0
+	Integer i<--0
 
 	while(integer =/= 0) do 
 		rem<--integer%2
 		integer/<--2
-		binary+<--rem*i
-		i*<--10
+		binary[i]<--rem
+		i<--i+1
 	done
 
-	printf(binary)
-	snprintf(s,19,binary)
+	binary[i]<--'\0'
+	Integer j
+	input[i]<--'\0'
+	i<--i-1
 
-	convertBaseToBinary<--s
+	for(j=0 to i>=0 i decreasing one by one) do 
+		input[i]<--binary[j++] + '0'
+	done
+
+	convertBaseToBinary <-- input
 END
 
 /*******************************************************************************************/
@@ -226,9 +236,9 @@ END
 
 Function : convertBinaryToBase(s: char*, base : Integer) : char*
 BEGIN
-	Integer output<--0
+	long Integer output<--0
 	char temp[64]
-	Integer coef<--1
+	long Integer coef<--1
 	Integer i<--0
 	size_t length<--strlen(s)
 	strcpy(temp,s)
@@ -237,18 +247,18 @@ BEGIN
 		temp[i]<-- s[length - i - 1]
 	done
 
-	printf(temp)
-
 	for (i=0 to i<length increasing one by one) do 
-		output += coef * (temp[i]-48)
+		output += coef * (temp[i]-'0')
 		coef <-- coef * 2
 	done
 
-	sprintf(s, "%d",output)
+	sprintf(s, "%ld",output)
 
-	char *a = convDecToBase(strtol(s,UNDEFINED,10),base)
-	strcpy(s,a)
-	free(a)
+	if(base =/= 10) then
+		char *a = convDecToBase(strtol(s,UNDEFINED,10),base)
+		strcpy(s,a)
+		free(a)
+	endif
 
 	convertBinaryToBase<--s
 
@@ -276,11 +286,11 @@ END
 /*******************************************************************************************/
 Function get_And_Verify_Int(test : Integer ,upper_bound :  Integer ,lower_bound :  Integer ) : Integer
 BEGIN
-	read test
+	scanf(test)
 	
 	while (test>upper_bound OR test<lower_bound) do
 		print "Your choice is not valid, please try again."
-		read test
+		scanf(test)
 	done
 
 	get_And_Verify_Int <-- test
