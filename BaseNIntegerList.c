@@ -202,7 +202,7 @@ void deleteIntegerList(BaseNIntegerList l)
 *************************************************************************************/
 char* sumIntegerList(BaseNIntegerList l)
 {
-	char *sum = calloc(64, 1);
+	char *sum = calloc(64, 1); //the best way we found to return a string, we have to free just after we called the function
 	char bintemp[64] = {0};
 	char sumtemp[64] = {0};
 	int binary1;
@@ -258,7 +258,7 @@ char* sumIntegerList(BaseNIntegerList l)
 	    }
 
 
-	    if (c != 0)
+	    if (c != 0) 
 		{
 	        sumtemp[i++] = 49;
 		}
@@ -353,7 +353,7 @@ char* convertBinaryToBase(char* s, int base)
 	sprintf(s, "%ld", output);
 
 
-	if(base != 10)
+	if(base != 10) //no need to convert to decimal if it already is
 	{
 	char *a = convDecToBase(strtol(s, NULL, 10), base);
 	strcpy(s, a);
@@ -401,7 +401,7 @@ void get_And_Verify_Int(int *test, int lower_bound, int upper_bound)
 
     while(*test>upper_bound || *test<lower_bound)
     {
-		while( getchar() != '\n' );
+		while( getchar() != '\n' ); //avoid infinite loop
         printf("Your choice is not valid, please try again.\n");
 		fflush(stdin);
         scanf("%d",test);
@@ -432,7 +432,10 @@ BaseNIntegerList fill(int base)
 	if(scanf("%d",&nb) != 1)
 	{
 		do
+		{
+			while(getchar() != '\n');
 			printf("Sorry, your value is not valid.\nPlease try again\n");
+		}
 		while(scanf("%d",&nb) != 1);
 	}
 	getline(&value, &size, stdin);
