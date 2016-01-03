@@ -1,3 +1,9 @@
+/************************************************************************************
+*BaseNIntegerList.h
+*DUVAUCHELLE.G AND PROST.S
+*
+*UTBM LO27 Jan 2016
+*************************************************************************************/
 #ifndef BASENINTEGERLIST_H
 #define BASENINTEGERLIST_H
 
@@ -88,7 +94,7 @@ BaseNIntegerList removeTail(BaseNIntegerList);
 *
 *Clears and deletes the specified BaseNIntegerList
 *(free the previously allocated memory)
-*Parameters : l BaseNIntegerList
+*Parameters : BaseNIntegerList
 *
 *************************************************************************************/
 void deleteIntegerList(BaseNIntegerList l);
@@ -102,7 +108,7 @@ void deleteIntegerList(BaseNIntegerList l);
 *specified list using the Binary addition (base 2)
 *and returns the corresponding results as
 *an integer (char*) defined in the base of the list
-*Parameters : l BaseNIntegerList
+*Parameters : BaseNIntegerList
 *
 *************************************************************************************/
 char* sumIntegerList(BaseNIntegerList l);
@@ -156,7 +162,7 @@ void get_And_Verify_Int(int *test, int lower_bound, int upper_bound);
 /**************************************************************************************
 *
 *Fill a linked list following the base and return it
-*Parameters: base
+*Parameters: base integer
 *
 *************************************************************************************/
 BaseNIntegerList fill(int base);
@@ -164,8 +170,8 @@ BaseNIntegerList fill(int base);
 
 /**************************************************************************************
 *
-*returns the number of digit of the integers with the most digit
-*Parameters: base
+*Returns the number of digit of the integers with the most digit
+*Parameters: BaseNIntegerList
 *
 *************************************************************************************/
 int maxIntegerLength(BaseNIntegerList);
@@ -174,9 +180,8 @@ int maxIntegerLength(BaseNIntegerList);
 
 /************************************************************************************
 *
-*sorts the specified BaseNIntegerList using the proposed radix sort approach.
-*See Figures 3-7 for a detailed description of the expected behavior of this function.
-*
+*Sorts the specified BaseNIntegerList using the proposed radix sort approach.
+*Parameters : BaseNIntegerList to sort, BOOL if printing details or not 
 *
 ************************************************************************************/
 BaseNIntegerList radixSort(BaseNIntegerList list, BOOL details);
@@ -185,8 +190,8 @@ BaseNIntegerList radixSort(BaseNIntegerList list, BOOL details);
 
 /**************************************************************************************
 *
-*puts the numbers in demo.txt in a list and returns it
-*no parameters
+*Puts the numbers in demo.txt in a list and returns it
+*No parameters
 *
 *************************************************************************************/
 BaseNIntegerList loadDemo();
@@ -195,7 +200,8 @@ BaseNIntegerList loadDemo();
 
 /**************************************************************************************
 *
-*prints the list in parameters
+*Prints the list in parameters
+*Parameters : BaseNIntegerList
 *
 *************************************************************************************/
 void printList(BaseNIntegerList list);
@@ -204,9 +210,10 @@ void printList(BaseNIntegerList list);
 
 /**************************************************************************************
 *
-*converts the list in parameters to binary
-*prints it
-*converts back to its original base
+*Converts the list in parameters to binary
+*Prints it
+*Converts back to its original base
+*Parameters : BaseNIntegerList
 *
 *************************************************************************************/
 void tryConvert(BaseNIntegerList list);

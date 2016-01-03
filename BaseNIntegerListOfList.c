@@ -1,10 +1,16 @@
+/************************************************************************************
+*BaseNIntegerListOfList.c
+*DUVAUCHELLE.G AND PROST.S
+*
+*UTBM LO27 Jan 2016
+*************************************************************************************/
 #include <BaseNIntegerListOfList.h>
 
 
 /************************************************************************************
 *
 *Creates a BaseNIntegerListOfList for storing list of integers in base N
-*Parameters : base
+*Parameters : base integer
 *
 *************************************************************************************/
 BaseNIntegerListOfList createBucketList (int base)
@@ -91,7 +97,7 @@ BaseNIntegerList buildIntegerList(BaseNIntegerListOfList bucketList)
 
 /*************************************************************************************
 *
-*clears and deletes the specified BaseNIntegerListOfList
+*Clears and deletes the specified BaseNIntegerListOfList
 *(free the previously allocated memory)
 *
 *************************************************************************************/
@@ -105,7 +111,8 @@ void deleteBucketList(BaseNIntegerListOfList listOfList)
 
 /*************************************************************************************
 *
-*prints the listoflist specified in parameters
+*Prints the listoflist specified in parameters
+*Parameters : BaseNIntegerListOfList
 *
 *************************************************************************************/
 void printListOfList(BaseNIntegerListOfList lol)

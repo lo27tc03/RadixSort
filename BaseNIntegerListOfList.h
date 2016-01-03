@@ -1,3 +1,9 @@
+/************************************************************************************
+*BaseNIntegerListOfList.h
+*DUVAUCHELLE.G AND PROST.S
+*
+*UTBM LO27 Jan 2016
+*************************************************************************************/
 #ifndef BASENINTEGERLISTOFLIST_H
 #define BASENINTEGERLISTOFLIST_H
 
@@ -58,7 +64,8 @@ void deleteBucketList(BaseNIntegerListOfList);
 
 /*************************************************************************************
 *
-*prints the listoflist specified in parameters
+*Prints the listoflist specified in parameters
+*Parameters : BaseNIntegerListOfList
 *
 *************************************************************************************/
 void printListOfList(BaseNIntegerListOfList lol);
