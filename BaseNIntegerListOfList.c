@@ -1,6 +1,12 @@
 #include <BaseNIntegerListOfList.h>
 
 
+/************************************************************************************
+*
+*Creates a BaseNIntegerListOfList for storing list of integers in base N
+*Parameters : base
+*
+*************************************************************************************/
 BaseNIntegerListOfList createBucketList (int base)
 {
 	BaseNIntegerListOfList l;
@@ -15,6 +21,13 @@ BaseNIntegerListOfList createBucketList (int base)
 }
 
 
+/*************************************************************************************
+*
+*Builds a new BaseNIntegerListOfList according to the specified BaseNIntegerList
+*and considering the specified digit position (rightmost)
+*Parameters : BaseNIntegerList , Integer of position
+*
+*************************************************************************************/
 BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
 {
 		BaseNIntegerListOfList bucketlist = createBucketList(list.base);
@@ -50,6 +63,13 @@ BaseNIntegerListOfList buildBucketList(BaseNIntegerList list, int pos)
 
 
 
+/*************************************************************************************
+*
+*Builds a new BaseNIntegerList from the specified BaseNIntegerListOfList
+*(respecting the ascending order on the buckets)
+*Parameters : BaseNIntegerListOfList
+*
+*************************************************************************************/
 BaseNIntegerList buildIntegerList(BaseNIntegerListOfList bucketList)
 {
 	BaseNIntegerList output = createIntegerList(bucketList.base);
@@ -67,15 +87,8 @@ BaseNIntegerList buildIntegerList(BaseNIntegerListOfList bucketList)
 	return output;
 }
 
-BaseNIntegerListOfList addIntegerIntoBucket(BaseNIntegerListOfList listOfList, char* integer, int bucket)
-{
-	return listOfList;
-}
 
-void deleteBucketList(BaseNIntegerListOfList listOfList)
-{
 
-}
 /*************************************************************************************
 *
 *clears and deletes the specified BaseNIntegerListOfList
@@ -83,8 +96,21 @@ void deleteBucketList(BaseNIntegerListOfList listOfList)
 *
 *************************************************************************************/
 
+void deleteBucketList(BaseNIntegerListOfList listOfList)
+{
+
+}
+
+
+
+/*************************************************************************************
+*
+*prints the listoflist specified in parameters
+*
+*************************************************************************************/
 void printListOfList(BaseNIntegerListOfList lol)
 {
+	system("clear");
 	int i = 0;
 	ListElement *temp = lol.list[0].head;
 
@@ -99,6 +125,8 @@ void printListOfList(BaseNIntegerListOfList lol)
 		}
 		printf("\n");
 	}
-	//while ( getchar() != '\n');
+
+	printf("press enter to continue\n");
+	while ( getchar() != '\n');
 	system("clear");
 }

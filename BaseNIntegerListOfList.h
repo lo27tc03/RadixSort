@@ -1,30 +1,30 @@
 #ifndef BASENINTEGERLISTOFLIST_H
 #define BASENINTEGERLISTOFLIST_H
 
+#define _GNU_SOURCE
 #include <BaseNIntegerList.h>
 #include <unistd.h>
 #include <math.h>
 #include <string.h>
-#include <time.h>
 
 typedef struct{
 	int base;
+
 	BaseNIntegerList list[17];
 	BOOL error;
 }BaseNIntegerListOfList;
 
 
 
-BaseNIntegerListOfList createBucketList (int);
 /************************************************************************************
 *
 *Creates a BaseNIntegerListOfList for storing list of integers in base N
 *Parameters : base
 *
 *************************************************************************************/
+BaseNIntegerListOfList createBucketList (int);
 
 
-BaseNIntegerListOfList buildBucketList(BaseNIntegerList, int);
 /*************************************************************************************
 *
 *Builds a new BaseNIntegerListOfList according to the specified BaseNIntegerList
@@ -32,9 +32,9 @@ BaseNIntegerListOfList buildBucketList(BaseNIntegerList, int);
 *Parameters : BaseNIntegerList , Integer of position
 *
 *************************************************************************************/
+BaseNIntegerListOfList buildBucketList(BaseNIntegerList, int);
 
 
-BaseNIntegerList buildIntegerList(BaseNIntegerListOfList);
 /*************************************************************************************
 *
 *Builds a new BaseNIntegerList from the specified BaseNIntegerListOfList
@@ -42,16 +42,9 @@ BaseNIntegerList buildIntegerList(BaseNIntegerListOfList);
 *Parameters : BaseNIntegerListOfList
 *
 *************************************************************************************/
+BaseNIntegerList buildIntegerList(BaseNIntegerListOfList);
 
-BaseNIntegerListOfList addIntegerIntoBucket(BaseNIntegerListOfList , char* , int);
-/*************************************************************************************
-*
-*Adds a new integer at the end of the specified list in bucket N
-*Parameters : BaseNIntegerListOfList , Integer to add in the bucket, integer of the base between 2 and 16
-*
-*************************************************************************************/
 
-void deleteBucketList(BaseNIntegerListOfList);
 /*************************************************************************************
 *
 *Clears and deletes the specified BaseNIntegerListOfList
@@ -59,7 +52,15 @@ void deleteBucketList(BaseNIntegerListOfList);
 *Parameters : BaseNIntegerListOfList
 *
 *************************************************************************************/
+void deleteBucketList(BaseNIntegerListOfList);
 
+
+
+/*************************************************************************************
+*
+*prints the listoflist specified in parameters
+*
+*************************************************************************************/
 void printListOfList(BaseNIntegerListOfList lol);
 
 

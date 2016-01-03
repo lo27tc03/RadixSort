@@ -115,7 +115,7 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 	{
 		if (l.size==1)
 		{
-			//free(l.tail->value);
+			free(l.tail->value);
 			free(l.head);
 			l.head = NULL;
 			l.tail = NULL;
@@ -123,12 +123,12 @@ BaseNIntegerList removeHead(BaseNIntegerList l)
 		}
 		else
 		{
-			ListElement *p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
+			ListElement *p;
 			p = l.head;
 			l.head = l.head->next;
 			l.head->previous = NULL;
 			l.size--;
-			//free(p->value);
+			free(p->value);
 			free(p);
 			p = NULL;
 		}
@@ -162,7 +162,7 @@ BaseNIntegerList removeTail(BaseNIntegerList l)
 		}
 		else
 		{
-			ListElement *p;			// pas sur niveau allocation si juste pointeur ou structure donc impact aussi le free
+			ListElement *p;
 			p = l.tail;
 			l.tail = l.tail->previous;
 			l.tail->next = NULL;
@@ -217,13 +217,11 @@ char* sumIntegerList(BaseNIntegerList l)
 	ListElement* temp = l.head;
 
 
-	while(temp != NULL)
+	while(temp != NULL) //convert all values in the list to binary
 	{
 		temp->value = convertBaseToBinary(temp->value, l.base);
 		temp = temp->next;
 	}
-
-	printList(l);
 
 	temp = l.head;
 
@@ -235,24 +233,22 @@ char* sumIntegerList(BaseNIntegerList l)
 		strcpy(sumtemp, sum);
 		while (i  < strlen(bintemp) || i < strlen(sumtemp) )
 	    {
-			if(i<strlen(bintemp))
+			if(i<strlen(bintemp)) //if there is more step than bits in the value we do the calculation with 0
 				binary1 = bintemp[strlen(bintemp)-i-1] - '0';
 			else
 				binary1 = 0;
 
-			if(i<strlen(sumtemp))
+			if(i<strlen(sumtemp)) //same for the sum
 				binary2 = sumtemp[i] - '0';
 			else
 				binary2 = 0;
 
-			printf("\n1 = %d, 2 = %d  ", binary1, binary2);
 
-	        sumtemp[i++] = ((binary1 + binary2 + c) % 2) + '0';
-			printf("sum %d", ((binary1 + binary2 + c) % 2));
-	        c =(binary1 + binary2 + c) / 2;
+	        sumtemp[i++] = ((binary1 + binary2 + c) % 2) + '0'; //compute the value
+	        c =(binary1 + binary2 + c) / 2; //compute the carry
 
 
-			if (i == 64)
+			if (i == 64) //because convertBinaryToBase cannot convert numbers greater than 64bits (long int)
 			{
 				printf("\nthe sum exceeds 2^64-1, cannot continue\n");
 				return sum;
@@ -265,13 +261,10 @@ char* sumIntegerList(BaseNIntegerList l)
 	    if (c != 0)
 		{
 	        sumtemp[i++] = 49;
-			printf("\ncarry %c\n", sumtemp[i-1]);
 		}
 
 
 		strcpy(sum, sumtemp);
-
-		printf("\n%s\n", sum);
 
 		for(j=0;j<64;j++)
 			sumtemp[j] = 0;
@@ -282,7 +275,7 @@ char* sumIntegerList(BaseNIntegerList l)
 
 	strcpy(sumtemp, sum);
 
-	for(j=0;j<strlen(sumtemp);j++)
+	for(j=0;j<strlen(sumtemp);j++) //reverses the binary number
 	{
 		sum[j] = sumtemp[strlen(sumtemp) - j - 1];
 	}
@@ -370,6 +363,13 @@ char* convertBinaryToBase(char* s, int base)
 	return s;
 }
 
+/**************************************************************************************
+*
+*Converts an integer represented using decimal base into a corresponding
+*integer represented with the specified base
+*Parameters : int dec the integer to convert , int base the base wanted
+*
+*************************************************************************************/
 char* convDecToBase(int dec, int base)
 {
 	if(dec == 0)
@@ -396,10 +396,14 @@ char* convDecToBase(int dec, int base)
 *************************************************************************************/
 void get_And_Verify_Int(int *test, int lower_bound, int upper_bound)
 {
+
 	scanf("%d",test);
+
     while(*test>upper_bound || *test<lower_bound)
     {
+		while( getchar() != '\n' );
         printf("Your choice is not valid, please try again.\n");
+		fflush(stdin);
         scanf("%d",test);
     }
 
@@ -452,6 +456,12 @@ BaseNIntegerList fill(int base)
 }
 
 
+/**************************************************************************************
+*
+*returns the number of digit of the integers with the most digit
+*Parameters: base
+*
+*************************************************************************************/
 int maxIntegerLength(BaseNIntegerList list)
 {
 	int i;
@@ -470,9 +480,17 @@ int maxIntegerLength(BaseNIntegerList list)
 }
 
 
-BaseNIntegerList radixSort(BaseNIntegerList list)
+
+/************************************************************************************
+*
+*sorts the specified BaseNIntegerList using the proposed radix sort approach.
+*See Figures 3-7 for a detailed description of the expected behavior of this function.
+*details precises if we print steps or not
+*
+************************************************************************************/
+BaseNIntegerList radixSort(BaseNIntegerList list, BOOL details)
 {
-    BaseNIntegerListOfList lol = createBucketList(list.base); // lol as list of list
+    BaseNIntegerListOfList lol = createBucketList(list.base); // lol as in list of list
     int length = maxIntegerLength(list);
     int i;
 
@@ -480,13 +498,22 @@ BaseNIntegerList radixSort(BaseNIntegerList list)
     for(i = 1; i <= length; ++i)
     {
         lol = buildBucketList(list, i);
-		//printListOfList(lol);
+		if(details)
+			printListOfList(lol);
         list = buildIntegerList(lol);
     }
     return list;
 }
 
 
+
+
+/**************************************************************************************
+*
+*puts the numbers in demo.txt in a list and returns it
+*no parameters
+*
+*************************************************************************************/
 BaseNIntegerList loadDemo()
 {
     FILE *demo = NULL;
@@ -521,6 +548,12 @@ BaseNIntegerList loadDemo()
 
 }
 
+
+/**************************************************************************************
+*
+*prints the list in parameters
+*
+*************************************************************************************/
 void printList(BaseNIntegerList list)
 {
 	ListElement *temp;
@@ -533,7 +566,13 @@ void printList(BaseNIntegerList list)
     printf("\n\n");
 }
 
-
+/**************************************************************************************
+*
+*converts the list in parameters to binary
+*prints it
+*converts back to its original base
+*
+*************************************************************************************/
 void tryConvert(BaseNIntegerList list)
 {
 	ListElement *temp = list.head;

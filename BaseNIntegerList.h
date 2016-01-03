@@ -1,8 +1,10 @@
 #ifndef BASENINTEGERLIST_H
 #define BASENINTEGERLIST_H
 
+#define _GNU_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -22,55 +24,66 @@ typedef struct {
 	int size;
 }BaseNIntegerList;
 
-BaseNIntegerList createIntegerList (int);
+
 /**************************************************************************************
 *
 *Creates a new empty BaseNIntegerList for storing integers in the specified base
 *Parameters : integer of the base
 *
 *************************************************************************************/
+BaseNIntegerList createIntegerList (int);
 
-BOOL isEmpty (BaseNIntegerList);
+
+
 /*************************************************************************************
 *Test if the list is empty
 *Return 1 if empty, 0 else
 *Parameters : BaseNintegerList to test
 **************************************************************************************/
+BOOL isEmpty (BaseNIntegerList);
 
-BaseNIntegerList insertHead (BaseNIntegerList, char*);
+
+
 /*************************************************************************************
 *
 *Adds the specified integer (char*, represented in the considered base) at the beginning of the specified list
 *Parameters : BaseNintegerList , integer to add
 *
 **************************************************************************************/
+BaseNIntegerList insertHead (BaseNIntegerList, char*);
 
-BaseNIntegerList insertTail (BaseNIntegerList, char*);
+
+
 /*************************************************************************************
 *
 *Adds the specified integer (char*) at the end of the specified list
 *Parameters : BaseNintegerList , integer to add
 *
 **************************************************************************************/
+BaseNIntegerList insertTail (BaseNIntegerList, char*);
 
-BaseNIntegerList removeHead(BaseNIntegerList);
+
+
 /**************************************************************************************
 *
 *Removes the first element of the specified list
 *Parameters : BaseNIntegerList
 *
 *************************************************************************************/
+BaseNIntegerList removeHead(BaseNIntegerList);
 
-BaseNIntegerList removeTail(BaseNIntegerList);
+
+
 /**************************************************************************************
 *
 *Removes the last element of the specified list
 *Parameters : BaseNIntegerList
 *
 *************************************************************************************/
+BaseNIntegerList removeTail(BaseNIntegerList);
 
 
-void deleteIntegerList(BaseNIntegerList l);
+
 /**************************************************************************************
 *
 *Clears and deletes the specified BaseNIntegerList
@@ -78,8 +91,11 @@ void deleteIntegerList(BaseNIntegerList l);
 *Parameters : l BaseNIntegerList
 *
 *************************************************************************************/
+void deleteIntegerList(BaseNIntegerList l);
 
-char* sumIntegerList(BaseNIntegerList l);
+
+
+
 /**************************************************************************************
 *
 *Sums all the integers defined in the
@@ -89,8 +105,10 @@ char* sumIntegerList(BaseNIntegerList l);
 *Parameters : l BaseNIntegerList
 *
 *************************************************************************************/
+char* sumIntegerList(BaseNIntegerList l);
 
-char* convertBaseToBinary(char* s, int n);
+
+
 /**************************************************************************************
 *
 *Converts the specified integer represented with the specified base
@@ -98,8 +116,10 @@ char* convertBaseToBinary(char* s, int n);
 *Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
+char* convertBaseToBinary(char* s, int n);
 
-char* convertBinaryToBase(char* s, int n);
+
+
 /**************************************************************************************
 *
 *Converts an integer represented using a binary base into a corresponding
@@ -107,28 +127,51 @@ char* convertBinaryToBase(char* s, int n);
 *Parameters : s char to convert , n specified base
 *
 *************************************************************************************/
+char* convertBinaryToBase(char* s, int n);
+
+
+
+
+/**************************************************************************************
+*
+*Converts an integer represented using decimal base into a corresponding
+*integer represented with the specified base
+*Parameters : int dec the integer to convert , int base the base wanted
+*
+*************************************************************************************/
 char* convDecToBase(int dec, int base);
 
-void get_And_Verify_Int(int *test, int lower_bound, int upper_bound);
+
+
 /**************************************************************************************
 *
 *Get an integer and verify if it is inbetween the two bounds
 *Parameters: test , upper_bound , lower_bound
 *
 *************************************************************************************/
+void get_And_Verify_Int(int *test, int lower_bound, int upper_bound);
 
-BaseNIntegerList fill(int base);
+
+
 /**************************************************************************************
 *
 *Fill a linked list following the base and return it
 *Parameters: base
 *
 *************************************************************************************/
+BaseNIntegerList fill(int base);
 
 
+/**************************************************************************************
+*
+*returns the number of digit of the integers with the most digit
+*Parameters: base
+*
+*************************************************************************************/
 int maxIntegerLength(BaseNIntegerList);
 
-BaseNIntegerList radixSort(BaseNIntegerList list);
+
+
 /************************************************************************************
 *
 *sorts the specified BaseNIntegerList using the proposed radix sort approach.
@@ -136,11 +179,36 @@ BaseNIntegerList radixSort(BaseNIntegerList list);
 *
 *
 ************************************************************************************/
+BaseNIntegerList radixSort(BaseNIntegerList list, BOOL details);
 
+
+
+/**************************************************************************************
+*
+*puts the numbers in demo.txt in a list and returns it
+*no parameters
+*
+*************************************************************************************/
 BaseNIntegerList loadDemo();
 
+
+
+/**************************************************************************************
+*
+*prints the list in parameters
+*
+*************************************************************************************/
 void printList(BaseNIntegerList list);
 
+
+
+/**************************************************************************************
+*
+*converts the list in parameters to binary
+*prints it
+*converts back to its original base
+*
+*************************************************************************************/
 void tryConvert(BaseNIntegerList list);
 
 #endif
